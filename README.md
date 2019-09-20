@@ -1,2 +1,2 @@
-# litters_bane
+# get_that_litter
 Litter bot
