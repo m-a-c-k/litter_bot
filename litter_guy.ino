@@ -1,7 +1,4 @@
-//This demo is used for testing the ultrasonic module.
-//Connect the module to Arduino UNO trig -> A2  echo ->A3
-//When the code start, it will print the value of the ultrasonic
-//to the serial montor
+
 #include <UCMotor.h>
 #include <Servo.h> 
 
