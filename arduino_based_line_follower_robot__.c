@@ -1,6 +1,6 @@
 /*-------definning Inputs------*/
-#define LS  2    // left sensor
-#define RS  5    // right sensor
+#define LS  A0    // left sensor
+#define RS  13    // right sensor
 
 
 /*-------definning Outputs------*/
