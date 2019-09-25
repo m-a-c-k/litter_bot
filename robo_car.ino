@@ -1,10 +1,11 @@
-//This demo is used for testing the ultrasonic module.
-//Connect the module to Arduino UNO trig -> A2  echo ->A3
-//When the code start, it will print the value of the ultrasonic
-//to the serial montor
+
 #include <UCMotor.h>
 #include <Servo.h>
+#include "UCNEC.h"
 
+#define LSensor A0
+#define MSensor A1
+#define RSensor 13
 
 #define TRIG_PIN A2
 #define ECHO_PIN A3
@@ -13,6 +14,7 @@ UC_DCMotor rightMotor1(4, MOTOR34_64KHZ);
 UC_DCMotor leftMotor2(1, MOTOR34_64KHZ);
 UC_DCMotor rightMotor2(2, MOTOR34_64KHZ);
 
+int SPEED = 80;
 
 void setup()
 {
@@ -27,19 +29,26 @@ void fwd() {
   leftMotor2.run(0x02); rightMotor2.run(0x02);
   leftMotor1.setSpeed(100); rightMotor1.setSpeed(100);
   leftMotor2.setSpeed(100); rightMotor2.setSpeed(100);
+  delay(100);
 }
 
 void lft() {
-  Serial.println("Backup, Turn");
-  leftMotor1.run(0x01); rightMotor1.run(0x01);
-  leftMotor2.run(0x01); rightMotor2.run(0x01);
-  leftMotor1.setSpeed(100); rightMotor1.setSpeed(100);
-  leftMotor2.setSpeed(100); rightMotor2.setSpeed(100);
-  delay(100);
+  Serial.println("Left Turn");
   leftMotor1.run(0x03); rightMotor1.run(0x03);
   leftMotor2.run(0x03); rightMotor2.run(0x03);
-  leftMotor1.setSpeed(200); rightMotor1.setSpeed(200);
-  leftMotor2.setSpeed(200); rightMotor2.setSpeed(200);  
+  leftMotor1.setSpeed(80); rightMotor1.setSpeed(80);
+  leftMotor2.setSpeed(80); rightMotor2.setSpeed(80);
+  delay(100);
+}
+
+void rght() {
+ Serial.println("Left Turn");
+ leftMotor1.run(0x04); rightMotor1.run(0x04);
+ leftMotor2.run(0x04); rightMotor2.run(0x04);
+ leftMotor1.setSpeed(80); rightMotor1.setSpeed(80);
+ leftMotor2.setSpeed(80); rightMotor2.setSpeed(80);
+ delay(100);  
+
 }
 
 void bck() {
@@ -48,21 +57,38 @@ void bck() {
   leftMotor2.run(0x01); rightMotor2.run(0x01);
   leftMotor1.setSpeed(100); rightMotor1.setSpeed(100);
   leftMotor2.setSpeed(100); rightMotor2.setSpeed(100);
+  delay(100);
+}
+
+void stp() {
+  Serial.println("Stop!");
+  leftMotor1.run(0x00); rightMotor1.run(0x00);
+  leftMotor2.run(0x00); rightMotor2.run(0x00);
+  leftMotor1.setSpeed(0); rightMotor1.setSpeed(0);
+  leftMotor2.setSpeed(0); rightMotor2.setSpeed(0);
+   delay(100);
 }
 
 void loop(){
   int temp = readPing();
   Serial.println(temp,DEC);
+  int leftRead = 0; midRead = 0; rightRead = 0;
   
-  if (temp > 10)
-    fwd();        
+  leftread = digitalRead(LSensor);
+  midRead = digitalRead(MSensor);
+  rightRead = digitalRead(RSensor);        
   
   if ( temp < 25)
-     lft();  
-  
-  if ( temp < 15 ) 
-      bck();      
-  
+     stp();  
+  if ((leftRead == 0) && (midRead == 0) && (rightRead == 0 )) 
+    stp();
+  else if ((leftRead == 0) && (rightRead == 1)) 
+    rght();
+  else if ((leftRead == 1) && (rightRead == 0))
+    lft();
+  else 
+    fwd();
+    
   delay(50);
   
   }
