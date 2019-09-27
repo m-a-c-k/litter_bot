@@ -131,9 +131,9 @@ void setup() {
   mid_IR = digitalRead(IR2);
   right_IR = digitalRead(IR3);
    
-  leftread = digitalRead(LSensor);
-  midRead = digitalRead(MSensor);
-  rightRead = digitalRead(RSensor);        
+  //leftread = digitalRead(LSensor);
+  //midRead = digitalRead(MSensor);
+  //rightRead = digitalRead(RSensor);        
   
   if ( temp < 25)
      stop();  
