@@ -76,23 +76,38 @@ void stop() {
   leftMotor2.setSpeed(0); rightMotor2.setSpeed(0);
 }
 
-voide reverse() {
+void reverse() {
   leftMotor1.run(BACKWARD); 
   leftMotor2.run(BACKWARD);
   rightMotor1.run(BACKWARD);
   rightMotor2.run(BACKWARD);
+  //delay(20);
+  leftMotor1.setSpeed(1.2*SPEED); 
+  leftMotor2.setSpeed(1.2*SPEED); 
+  rightMotor1.setSpeed(1.2*SPEED);
+  rightMotor2.setSpeed(1.2*SPEED);
+}
+
+void rev_right() {
+  leftMotor1.run(BACKWARD); 
+  leftMotor2.run(BACKWARD);
   delay(20);
-  leftMotor1.setSpeed(SPEED); 
-  leftMotor2.setSpeed(SPEED); 
-  rightMotor1.setSpeed(SPEED);
-  rightMotor2.setSpeed(SPEED);
-  delay(10);
+  leftMotor1.setSpeed(1.2*SPEED); 
+  leftMotor2.setSpeed(1.2*SPEED);
+}
+
+void rev_left() {
+  rightMotor1.run(BACKWARD); 
+  rightMotor2.run(BACKWARD);
+  delay(20);
+  rightMotor1.setSpeed(1.2*SPEED); 
+  rightMotor2.setSpeed(1.2*SPEED);
 }
 
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
-  start_forward();
+  //start_forward();
    
 }
 
@@ -110,6 +125,7 @@ void loop() {
 
     switch(state) {
       case 0:
+        start_forward();
         forward();
         break;
 
@@ -129,9 +145,12 @@ void loop() {
         hard_right();
         break;
        
-      case 8:
+      case 7:
+        stop();
         reverse();
-        break;
+        delay(50);
+        stop();
+        forward();
 
        default:
         forward();
