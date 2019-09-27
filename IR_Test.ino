@@ -83,7 +83,7 @@ void setup() {
    
 }
 
-void loop() {
+/*void loop() {
   // put your main code here, to run repeatedly:
 
   //wallDetect needs to be a function!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -122,7 +122,33 @@ void loop() {
     }
     
   }
-
+*/
+ void loop(){
+  int temp = readPing();
+  Serial.println(temp,DEC);
+  //int leftRead = 0; midRead = 0; rightRead = 0;
+  left_IR = digitalRead(IR1);
+  mid_IR = digitalRead(IR2);
+  right_IR = digitalRead(IR3);
+   
+  leftread = digitalRead(LSensor);
+  midRead = digitalRead(MSensor);
+  rightRead = digitalRead(RSensor);        
+  
+  if ( temp < 25)
+     stop();  
+  if ((left_IR == 0) && (mid_IR == 0) && (right_IR == 0 )) 
+    stop();
+  else if ((left_IR == 0) && (right_IR == 1)) 
+    right();
+  else if ((left_IR == 1) && (right_IR == 0))
+    left();
+  else 
+    forward();
+    
+  delay(50);
+  
+  }
 
 
 
