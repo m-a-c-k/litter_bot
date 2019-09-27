@@ -148,8 +148,9 @@ void loop() {
       case 7:
         stop();
         reverse();
-        delay(50);
+        delay(200);
         stop();
+        start_forward();
         forward();
 
        default:
