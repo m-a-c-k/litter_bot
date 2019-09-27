@@ -44,30 +44,30 @@ void forward() {
 }
 
 void left() {
- leftMotor1.setSpeed(SPEED/2); 
- rightMotor1.setSpeed(2.5*SPEED);
- leftMotor2.setSpeed(SPEED/2); 
- rightMotor2.setSpeed(2.5*SPEED);
+ leftMotor1.setSpeed(SPEED/1.1); 
+ rightMotor1.setSpeed(SPEED);
+ leftMotor2.setSpeed(SPEED/1.1); 
+ rightMotor2.setSpeed(SPEED);
 }
 
 void hard_left() {
  leftMotor1.setSpeed(SPEED/2); 
- rightMotor1.setSpeed(3.5*SPEED);
+ rightMotor1.setSpeed(2.5*SPEED);
  leftMotor2.setSpeed(SPEED/2);
- rightMotor2.setSpeed(3.5*SPEED); 
+ rightMotor2.setSpeed(2.5*SPEED); 
 }
 
 void right() {
- leftMotor1.setSpeed(2.5*SPEED); 
- rightMotor1.setSpeed(SPEED/2);
- leftMotor2.setSpeed(2.5*SPEED); 
- rightMotor2.setSpeed(SPEED/2);
+ leftMotor1.setSpeed(SPEED); 
+ rightMotor1.setSpeed(SPEED/1.1);
+ leftMotor2.setSpeed(SPEED); 
+ rightMotor2.setSpeed(SPEED/1.1);
 }
 
 void hard_right() {
- leftMotor1.setSpeed(3.5*SPEED);
+ leftMotor1.setSpeed(2.5*SPEED);
  rightMotor1.setSpeed(SPEED/2);
- leftMotor2.setSpeed(3.5*SPEED);
+ leftMotor2.setSpeed(2.5*SPEED);
  rightMotor2.setSpeed(SPEED/2);
 }
 
@@ -124,7 +124,6 @@ void setup() {
   }
 */
  void loop(){
-  int temp = readPing();
   Serial.println(temp,DEC);
   //int leftRead = 0; midRead = 0; rightRead = 0;
   left_IR = digitalRead(IR1);
@@ -135,8 +134,7 @@ void setup() {
   //midRead = digitalRead(MSensor);
   //rightRead = digitalRead(RSensor);        
   
-  if ( temp < 25)
-     stop();  
+  
   if ((left_IR == 0) && (mid_IR == 0) && (right_IR == 0 )) 
     stop();
   else if ((left_IR == 0) && (right_IR == 1)) 
