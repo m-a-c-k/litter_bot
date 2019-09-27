@@ -44,30 +44,30 @@ void forward() {
 }
 
 void left() {
- leftMotor1.setSpeed(SPEED/2); 
- rightMotor1.setSpeed(2.5*SPEED);
- leftMotor2.setSpeed(SPEED/2); 
- rightMotor2.setSpeed(2.5*SPEED);
+ leftMotor1.setSpeed(SPEED/1.1); 
+ rightMotor1.setSpeed(SPEED);
+ leftMotor2.setSpeed(SPEED/1.1); 
+ rightMotor2.setSpeed(SPEED);
 }
 
 void hard_left() {
  leftMotor1.setSpeed(SPEED/2); 
- rightMotor1.setSpeed(3.5*SPEED);
+ rightMotor1.setSpeed(2.5*SPEED);
  leftMotor2.setSpeed(SPEED/2);
- rightMotor2.setSpeed(3.5*SPEED); 
+ rightMotor2.setSpeed(2.5*SPEED); 
 }
 
 void right() {
- leftMotor1.setSpeed(2.5*SPEED); 
- rightMotor1.setSpeed(SPEED/2);
- leftMotor2.setSpeed(2.5*SPEED); 
- rightMotor2.setSpeed(SPEED/2);
+ leftMotor1.setSpeed(SPEED); 
+ rightMotor1.setSpeed(SPEED/1.1);
+ leftMotor2.setSpeed(SPEED); 
+ rightMotor2.setSpeed(SPEED/1.1);
 }
 
 void hard_right() {
- leftMotor1.setSpeed(3.5*SPEED);
+ leftMotor1.setSpeed(2.5*SPEED);
  rightMotor1.setSpeed(SPEED/2);
- leftMotor2.setSpeed(3.5*SPEED);
+ leftMotor2.setSpeed(2.5*SPEED);
  rightMotor2.setSpeed(SPEED/2);
 }
 
