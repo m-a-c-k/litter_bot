@@ -1,101 +1,100 @@
-
 #include <UCMotor.h>
 #include <Servo.h>
-#include "UCNEC.h"
 
-#define LSensor A0
-#define MSensor A1
-#define RSensor 13
 
+#define IR1 A0 // left sensor
+#define IR2 A1 // middle sensor
+#define IR3 13 // right sensor 
+
+#define START_SPEED 150
+#define SPEED 65
+#define TURN_SPEED1 150 // soft turn
+#define TURN_SPEED2 255 // hard turn
+
+#define FORWARD 1
+#define BACKWARD 2
 #define TRIG_PIN A2
 #define ECHO_PIN A3
+
 UC_DCMotor leftMotor1(3, MOTOR34_64KHZ);
 UC_DCMotor rightMotor1(4, MOTOR34_64KHZ);
 UC_DCMotor leftMotor2(1, MOTOR34_64KHZ);
 UC_DCMotor rightMotor2(2, MOTOR34_64KHZ);
 
-int SPEED = 100;
+int left_IR = 1;
+int mid_IR = 1;
+int right_IR = 1;
+int state = 0;  // 3-bit input from  IR sensors  
+bool wallDetect = false;
+
 Servo myservo;
 int pos = 0;
 
-void setup()
-{
-  Serial.begin(115200);
-  pinMode(ECHO_PIN, INPUT); //Set the connection pin output mode Echo pin
-  pinMode(TRIG_PIN, OUTPUT);//Set the connection pin output mode trog pin
-  myservo.attach(9);  // attaches the servo on pin 9 to the servo object
+void start_forward() {
+  leftMotor1.setSpeed(START_SPEED); 
+  leftMotor2.setSpeed(START_SPEED);
+  rightMotor1.setSpeed(START_SPEED);
+  rightMotor2.setSpeed(START_SPEED);
+  
+  leftMotor1.run(FORWARD); 
+  leftMotor2.run(FORWARD);
+  rightMotor1.run(FORWARD);
+  rightMotor2.run(FORWARD);
+  delay(20);
 }
 
-void fwd() {
-  Serial.println("Forwards");
-  leftMotor1.run(0x02); rightMotor1.run(0x02);
-  leftMotor2.run(0x02); rightMotor2.run(0x02);
-  leftMotor1.setSpeed(100); rightMotor1.setSpeed(100);
-  leftMotor2.setSpeed(100); rightMotor2.setSpeed(100);
-  delay(100);
+void forward() {
+  leftMotor1.setSpeed(SPEED); 
+  leftMotor2.setSpeed(SPEED); 
+  rightMotor1.setSpeed(SPEED);
+  rightMotor2.setSpeed(SPEED);
 }
 
-void lft() {
-  Serial.println("Left Turn");
-  leftMotor1.run(0x03); rightMotor1.run(0x03);
-  leftMotor2.run(0x03); rightMotor2.run(0x03);
-  leftMotor1.setSpeed(80); rightMotor1.setSpeed(80);
-  leftMotor2.setSpeed(80); rightMotor2.setSpeed(80);
-  delay(100);
+void left() {
+ leftMotor1.setSpeed(SPEED/1.1); 
+ rightMotor1.setSpeed(SPEED);
+ leftMotor2.setSpeed(SPEED/1.1); 
+ rightMotor2.setSpeed(SPEED);
 }
 
-void rght() {
- Serial.println("Left Turn");
- leftMotor1.run(0x04); rightMotor1.run(0x04);
- leftMotor2.run(0x04); rightMotor2.run(0x04);
- leftMotor1.setSpeed(80); rightMotor1.setSpeed(80);
- leftMotor2.setSpeed(80); rightMotor2.setSpeed(80);
- delay(100);  
-
+void hard_left() {
+ leftMotor1.setSpeed(SPEED/2); 
+ rightMotor1.setSpeed(2.5*SPEED);
+ leftMotor2.setSpeed(SPEED/2);
+ rightMotor2.setSpeed(2.5*SPEED); 
 }
 
-void bck() {
-  Serial.println("Backwards");
-  leftMotor1.run(0x01); rightMotor1.run(0x01);
-  leftMotor2.run(0x01); rightMotor2.run(0x01);
-  leftMotor1.setSpeed(100); rightMotor1.setSpeed(100);
-  leftMotor2.setSpeed(100); rightMotor2.setSpeed(100);
-  delay(100);
+void right() {
+ leftMotor1.setSpeed(SPEED); 
+ rightMotor1.setSpeed(SPEED/1.1);
+ leftMotor2.setSpeed(SPEED); 
+ rightMotor2.setSpeed(SPEED/1.1);
 }
 
-void stp() {
-  Serial.println("Stop!");
-  leftMotor1.run(0x00); rightMotor1.run(0x00);
-  leftMotor2.run(0x00); rightMotor2.run(0x00);
+void hard_right() {
+ leftMotor1.setSpeed(2.5*SPEED);
+ rightMotor1.setSpeed(SPEED/2);
+ leftMotor2.setSpeed(2.5*SPEED);
+ rightMotor2.setSpeed(SPEED/2);
+}
+
+void stop() {
   leftMotor1.setSpeed(0); rightMotor1.setSpeed(0);
   leftMotor2.setSpeed(0); rightMotor2.setSpeed(0);
-   delay(100);
+  delay(100);
 }
 
-void loop(){
-  int temp = readPing();
-  Serial.println(temp,DEC);
-  int leftRead = 0; midRead = 0; rightRead = 0;
-  
-  leftread = digitalRead(LSensor);
-  midRead = digitalRead(MSensor);
-  rightRead = digitalRead(RSensor);        
-  
-  if ( temp < 25)
-     stp();  
-  if ((leftRead == 0) && (midRead == 0) && (rightRead == 0 )) 
-    stp();
-  else if ((leftRead == 0) && (rightRead == 1)) 
-    rght();
-  else if ((leftRead == 1) && (rightRead == 0))
-    lft();
-  else 
-    fwd();
-    
-  delay(50);
-  
-  }
-
+void reverse() {
+  leftMotor1.run(BACKWARD); 
+  leftMotor2.run(BACKWARD);
+  rightMotor1.run(BACKWARD);
+  rightMotor2.run(BACKWARD);
+  //delay(20);
+  leftMotor1.setSpeed(1.2*SPEED); 
+  leftMotor2.setSpeed(1.2*SPEED); 
+  rightMotor1.setSpeed(1.2*SPEED);
+  rightMotor2.setSpeed(1.2*SPEED);
+}
 
 int readPing()
 {
@@ -128,15 +127,80 @@ long microsecondsToCentimeters(long microseconds)
 }
 
 void servoSweep() {
-  for (pos = 0; pos <= 180; pos += 1) { // goes from 0 degrees to 180 degrees
+  for (pos = 0; pos <= 60; pos += 1) { // goes from 0 degrees to 180 degrees
     // in steps of 1 degree
     myservo.write(pos);              // tell servo to go to position in variable 'pos'
-    delay(15);                       // waits 15ms for the servo to reach the position
+    delay(10);                       // waits 15ms for the servo to reach the position
   }
-  for (pos = 180; pos >= 0; pos -= 1) { // goes from 180 degrees to 0 degrees
+  for (pos = 60; pos >= 0; pos -= 1) { // goes from 180 degrees to 0 degrees
     myservo.write(pos);              // tell servo to go to position in variable 'pos'
-    delay(15);                       // waits 15ms for the servo to reach the position
+    delay(10);                       // waits 15ms for the servo to reach the position
   }
 }
 
 
+void setup() {
+  // put your setup code here, to run once:
+  Serial.begin(9600);
+  start_forward();
+   
+}
+
+void loop() {
+  //int temp = readPing();
+  int temp = 100;
+  if ( temp < 25 ) {
+      stop(); 
+      wallDetect = true;
+  }
+  
+  //wallDetect needs to be a function!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  while(!wallDetect) {  
+    left_IR = digitalRead(IR1);
+    mid_IR = digitalRead(IR2);
+    right_IR = digitalRead(IR3);
+  
+    state = 4*left_IR + 2*mid_IR + right_IR;
+    Serial.println(state);
+    
+    switch(state) {
+      case 0:
+        start_forward();
+        forward();
+        break;
+
+      case 1:
+        left();        
+        break;
+
+       case 3:
+        hard_left();
+        break;
+
+       case 4:
+        right();
+        break;
+
+       case 6:
+        hard_right();
+        break;
+       
+      case 7:
+        stop();
+        reverse();
+        delay(200);
+        stop();
+        start_forward();
+        forward();
+
+       default:
+        forward();
+        break;
+    }
+    
+  }
+
+  
+
+}
+  
