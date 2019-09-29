@@ -1,5 +1,7 @@
 #include <UCMotor.h>
 #include <Servo.h>
+#include "UCNEC.h"
+
 
 
 #define IR1 A0 // left sensor
@@ -21,6 +23,9 @@ UC_DCMotor rightMotor1(4, MOTOR34_64KHZ);
 UC_DCMotor leftMotor2(1, MOTOR34_64KHZ);
 UC_DCMotor rightMotor2(2, MOTOR34_64KHZ);
 
+int32_t remote = 0;
+UCNEC myIR(2)
+  
 int left_IR = 1;
 int mid_IR = 1;
 int right_IR = 1;
@@ -143,6 +148,7 @@ void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
   start_forward();
+  myIR.begin();
   //servoSweep();
 }
 
@@ -152,6 +158,11 @@ void loop() {
   if ( temp < 25 ) {
       stop(); 
       wallDetect = true;
+    while (myIR.available())
+    {
+      remote =  myIR.read();
+      Serial.println(remote, HEX);
+    }
   }
   
   //wallDetect needs to be a function!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
