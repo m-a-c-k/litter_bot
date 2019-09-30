@@ -7,6 +7,7 @@
 #define IR1 A0 // left sensor
 #define IR2 A1 // middle sensor
 #define IR3 13 // right sensor 
+#define SERVO_PIN 10
 
 #define START_SPEED 150
 #define SPEED 65
@@ -24,7 +25,7 @@ UC_DCMotor leftMotor2(1, MOTOR34_64KHZ);
 UC_DCMotor rightMotor2(2, MOTOR34_64KHZ);
 
 int32_t remote = 0;
-UCNEC myIR(2)
+UCNEC myIR(2);
   
 int left_IR = 1;
 int mid_IR = 1;
@@ -146,24 +147,41 @@ void servoSweep() {
 
 void setup() {
   // put your setup code here, to run once:
-  Serial.begin(9600);
-  start_forward();
+  Serial.begin(115200);
   myIR.begin();
   //servoSweep();
 }
 
 void loop() {
-  //int temp = readPing();
-  int temp = 100;
+  int temp = readPing();
+  //int temp = 100;
+  while (myIR.available())
+      {
+        remote =  myIR.read();
+        Serial.println(remote, HEX);
+      }
+      if (remote == 0xFB06F9) {
+        Serial.println("Right turn received");
+      }
+      else if (remote == 0xFB07F8) {
+        Serial.println("Left turn received");        
+      }
+      
   if ( temp < 25 ) {
       stop(); 
       wallDetect = true;
-    while (myIR.available())
-    {
-      remote =  myIR.read();
-      Serial.println(remote, HEX);
-    }
-  }
+      while (myIR.available())
+      {
+        remote =  myIR.read();
+        Serial.println(remote, HEX);
+      }
+      if (remote == 0xFB06F9) {
+        Serial.println("Right turn received");
+      }
+      else if (remote == 0xFB07F8) {
+        Serial.println("Left turn received");        
+      }
+   }
   
   //wallDetect needs to be a function!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   while(!wallDetect) {  
@@ -211,7 +229,8 @@ void loop() {
     
   }
 
-  
+
+ 
 
 }
   
