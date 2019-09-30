@@ -2,8 +2,6 @@
 #include <Servo.h>
 #include "UCNEC.h"
 
-
-
 #define IR1 A0 // left sensor
 #define IR2 A1 // middle sensor
 #define IR3 13 // right sensor 
