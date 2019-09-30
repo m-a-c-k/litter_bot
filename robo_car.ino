@@ -36,6 +36,32 @@ bool wallDetect = false;
 Servo myservo;
 int pos = 0;
 
+void swiv_right() {
+ leftMotor1.setSpeed(2.5*SPEED);
+ rightMotor1.setSpeed(0);
+ leftMotor2.setSpeed(2.5*SPEED);
+ rightMotor2.setSpeed(0);
+ 
+ leftMotor1.run(FORWARD); 
+ leftMotor2.run(FORWARD);
+ rightMotor1.run(FORWARD);
+ rightMotor2.run(FORWARD);
+ delay(1000);  
+}
+
+void swiv_left() {
+ leftMotor1.setSpeed(0);
+ rightMotor1.setSpeed(2.5*SPEED);
+ leftMotor2.setSpeed(0);
+ rightMotor2.setSpeed(2.5*SPEED);
+ 
+ leftMotor1.run(FORWARD); 
+ leftMotor2.run(FORWARD);
+ rightMotor1.run(FORWARD);
+ rightMotor2.run(FORWARD);
+ delay(1000); 
+}
+
 void start_forward() {
   leftMotor1.setSpeed(START_SPEED); 
   leftMotor2.setSpeed(START_SPEED);
@@ -162,9 +188,13 @@ void loop() {
       }
       if (remote == 0xFB06F9) {
         Serial.println("Right turn received");
+        swiv_right();
+        start_forward();
       }
       else if (remote == 0xFB07F8) {
-        Serial.println("Left turn received");        
+        Serial.println("Left turn received");
+        swiv_left();
+        start_forward();
       }
       
   if ( temp < 25 ) {
