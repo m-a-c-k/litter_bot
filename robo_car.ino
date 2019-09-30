@@ -2,6 +2,8 @@
 #include <Servo.h>
 #include "UCNEC.h"
 
+
+
 #define IR1 A0 // left sensor
 #define IR2 A1 // middle sensor
 #define IR3 13 // right sensor 
@@ -35,29 +37,29 @@ Servo myservo;
 int pos = 0;
 
 void swiv_right() {
- leftMotor1.setSpeed(2.5*SPEED);
+ leftMotor1.setSpeed(3*SPEED);
  rightMotor1.setSpeed(0);
- leftMotor2.setSpeed(2.5*SPEED);
+ leftMotor2.setSpeed(3*SPEED);
  rightMotor2.setSpeed(0);
  
  leftMotor1.run(FORWARD); 
  leftMotor2.run(FORWARD);
  rightMotor1.run(FORWARD);
  rightMotor2.run(FORWARD);
- delay(1000);  
+ delay(750);
 }
 
 void swiv_left() {
  leftMotor1.setSpeed(0);
- rightMotor1.setSpeed(2.5*SPEED);
+ rightMotor1.setSpeed(3*SPEED);
  leftMotor2.setSpeed(0);
- rightMotor2.setSpeed(2.5*SPEED);
+ rightMotor2.setSpeed(3*SPEED);
  
  leftMotor1.run(FORWARD); 
  leftMotor2.run(FORWARD);
  rightMotor1.run(FORWARD);
  rightMotor2.run(FORWARD);
- delay(1000); 
+ delay(750);
 }
 
 void start_forward() {
@@ -179,7 +181,7 @@ void setup() {
 void loop() {
   int temp = readPing();
   //int temp = 100;
-  while (myIR.available())
+  /*while (myIR.available())
       {
         remote =  myIR.read();
         Serial.println(remote, HEX);
@@ -190,11 +192,11 @@ void loop() {
         start_forward();
       }
       else if (remote == 0xFB07F8) {
-        Serial.println("Left turn received");
+        Serial.println("Left turn received");     
         swiv_left();
-        start_forward();
+        start_forward();   
       }
-      
+    */  
   if ( temp < 25 ) {
       stop(); 
       wallDetect = true;
@@ -205,9 +207,15 @@ void loop() {
       }
       if (remote == 0xFB06F9) {
         Serial.println("Right turn received");
+        swiv_right();
+        start_forward();
+        wallDetect = false;
       }
       else if (remote == 0xFB07F8) {
-        Serial.println("Left turn received");        
+        Serial.println("Left turn received");
+        swiv_left();
+        start_forward();
+        wallDetect = false;         
       }
    }
   
