@@ -181,6 +181,7 @@ void setup() {
 void loop() {
   int temp = readPing();
   //int temp = 100;
+  Serial.println(temp);
    
   if ( temp < 25 )
     wallDetect = true;
