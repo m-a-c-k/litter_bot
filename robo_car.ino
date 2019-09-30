@@ -31,7 +31,7 @@ int left_IR = 1;
 int mid_IR = 1;
 int right_IR = 1;
 int state = 0;  // 3-bit input from  IR sensors  
-bool wallDetect = false;
+bool wallDetect = true;
 
 Servo myservo;
 int pos = 0;
@@ -209,13 +209,17 @@ void loop() {
         Serial.println("Forward received");
         start_forward();
         forward();
-        wallDetect = false;    
+        wallDetect = false;
+        delay(5000);
+        exit();
       }
       else if (remote == 0xFF41BE) {
         Serial.println("Reverse received");
         reverse();
         delay (500);
-        wallDetect = false;    
+        wallDetect = false;  
+        delay(5000);
+        exit();
       }
    }
   
@@ -264,7 +268,6 @@ void loop() {
     }
     
   }
-
 
  
 
