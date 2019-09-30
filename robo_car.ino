@@ -181,23 +181,10 @@ void setup() {
 void loop() {
   int temp = readPing();
   //int temp = 100;
-  /*while (myIR.available())
-      {
-        remote =  myIR.read();
-        Serial.println(remote, HEX);
-      }
-      if (remote == 0xFB06F9) {
-        Serial.println("Right turn received");
-        swiv_right();
-        start_forward();
-      }
-      else if (remote == 0xFB07F8) {
-        Serial.println("Left turn received");     
-        swiv_left();
-        start_forward();   
-      }
-    */  
-  if ( temp < 25 ) {
+   
+  if ( temp < 25 )
+    wallDetect = true;
+  if ( wallDetect ) {
       stop(); 
       wallDetect = true;
       while (myIR.available())
@@ -216,6 +203,18 @@ void loop() {
         swiv_left();
         start_forward();
         wallDetect = false;         
+      }
+      else if (remote == 0xFF40BF) {
+        Serial.println("Forward received");
+        start_forward();
+        forward();
+        wallDetect = false;    
+      }
+      else if (remote == 0xFF41BE) {
+        Serial.println("Reverse received");
+        reverse();
+        delay (500);
+        wallDetect = false;    
       }
    }
   
