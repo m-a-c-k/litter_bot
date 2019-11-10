@@ -60,8 +60,32 @@ void loop() {
          
       delay(100);           
     }
-  }   
-      
- 
+  }       
   
+}
+
+
+void fwd()
+{
+ 
+}
+
+void bck()
+{
+ 
+}
+
+void lft()
+{
+ 
+}
+
+void rght()
+{
+ 
+}
+
+void stp()
+{
+ 
 }
