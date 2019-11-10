@@ -1,0 +1,67 @@
+#define enA 9
+#define enB 10
+#define in1 6
+#define in2 7
+#define in3 4
+#define in4 5
+
+#include <Pixy2.h>
+
+// This is the main Pixy object 
+Pixy2 pixy;
+
+int i, j;
+
+void setup() {
+  pinMode(enA, OUTPUT);
+  pinMode(in1, OUTPUT);
+  pinMode(in2, OUTPUT);
+  //pinMode(button, INPUT);
+  // Set initial rotation direction
+  digitalWrite(in1, LOW);
+  digitalWrite(in2, HIGH);
+  digitalWrite(in3, LOW);
+  digitalWrite(in4, HIGH);
+
+  Serial.begin(115200);
+  Serial.print("...Starting...\n");
+  pixy.init();
+
+}
+void loop() {
+  
+  int pwmOutput = 255; // value from 0 to 255
+  analogWrite(enA, pwmOutput); // Send PWM signal to L298N Enable pin
+  analogWrite(enB, pwmOutput);
+  pixy.ccc.getBlocks();
+
+  if (pixy.ccc.numBlocks)
+  {
+    Serial.print("Detected ");
+    Serial.println(pixy.ccc.numBlocks);
+    for (i=0; i<pixy.ccc.numBlocks; i++)
+    {
+      Serial.print("  block ");
+      Serial.print(i);
+      Serial.print(": ");
+      pixy.ccc.blocks[i].print();
+
+      digitalWrite(in1, LOW);
+      digitalWrite(in2, HIGH);
+      digitalWrite(in3, LOW);
+      digitalWrite(in4, HIGH);
+
+      delay(200);
+      
+      digitalWrite(in1, LOW);
+      digitalWrite(in2, LOW);
+      digitalWrite(in3, LOW);
+      digitalWrite(in4, LOW);
+         
+      delay(100);           
+    }
+  }   
+      
+ 
+  
+}
