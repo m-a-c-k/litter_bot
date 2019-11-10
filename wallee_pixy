@@ -28,6 +28,7 @@ void setup() {
   Serial.begin(115200);
   Serial.print("...Starting...\n");
   pixy.init();
+  pixy.setLamp(1, 1);
 
 }
 void loop() {
@@ -50,32 +51,36 @@ void loop() {
       pixy.ccc.blocks[i].print();
       Serial.print("  Area: ");
       Serial.print(area); Serial.print("\n");
-            
-      fwd();
 
+      stp();
       delay(100);
       
-      stp();
+      if(pixy.ccc.blocks[i].m_x<=100)
+      {      
+      lft();  
+      delay(200); 
+      }   
+
+      if(pixy.ccc.blocks[i].m_x>=220)
+      {      
+      rght();  
+      delay(200); 
+      }
+            
+      if(pixy.ccc.blocks[i].m_x>100 && pixy.ccc.blocks[i].m_x<220)
+      {      
+      fwd();
+      delay(500);
+      }
       
-      delay(250);
-
-      rght();
-
-      delay(150);
-
-      lft();
-
-      delay(150);
-
       stp();
 
-      delay (500);
-                       
+      delay (200);
+                             
     }
   }       
-  
-}
 
+}
 
 void fwd()
 {
