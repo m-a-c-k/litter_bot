@@ -17,7 +17,7 @@ void setup() {
   pinMode(enA, OUTPUT);
   pinMode(in1, OUTPUT);
   pinMode(in2, OUTPUT);
-  //pinMode(button, INPUT);
+ 
   // Set initial rotation direction
   /*
   digitalWrite(in1, LOW);
@@ -28,7 +28,8 @@ void setup() {
   Serial.begin(115200);
   Serial.print("...Starting...\n");
   pixy.init();
-  pixy.setLamp(1, 1);
+  pixy.setLamp(1, 0);
+  delay(500);
 
 }
 void loop() {
@@ -40,6 +41,7 @@ void loop() {
 
   if (pixy.ccc.numBlocks)
   {
+    pwmOutput = 255;
     Serial.print("Detected ");
     Serial.println(pixy.ccc.numBlocks);
     for (i=0; i<pixy.ccc.numBlocks; i++)
@@ -51,20 +53,17 @@ void loop() {
       pixy.ccc.blocks[i].print();
       Serial.print("  Area: ");
       Serial.print(area); Serial.print("\n");
-
-      stp();
-      delay(100);
-      
+          
       if(pixy.ccc.blocks[i].m_x<=100)
       {      
       lft();  
-      delay(200); 
+      delay(100); 
       }   
 
       if(pixy.ccc.blocks[i].m_x>=220)
       {      
-      rght();  
-      delay(200); 
+      rght();      
+      delay(100); 
       }
             
       if(pixy.ccc.blocks[i].m_x>100 && pixy.ccc.blocks[i].m_x<220)
@@ -73,12 +72,24 @@ void loop() {
       delay(500);
       }
       
-      stp();
+      
+      if(pixy.ccc.blocks[i].m_x>100 && pixy.ccc.blocks[i].m_x<220 && area>2500)
+      {
+      bck();
+      }
 
-      delay (200);
-                             
+      
+      delay (10);
+
+      stp();                       
     }
-  }       
+  }  
+
+    else {
+     
+      pwmOutput=150;
+      search(); delay(300);
+    }
 
 }
 
@@ -124,5 +135,14 @@ void stp()
   digitalWrite(in1, LOW);
   digitalWrite(in2, LOW);
   digitalWrite(in3, LOW);
+  digitalWrite(in4, LOW);
+}
+
+void search()
+{
+  Serial.print("\nSESRCHING\n");
+  digitalWrite(in1, LOW);
+  digitalWrite(in2, HIGH);
+  digitalWrite(in3, HIGH);
   digitalWrite(in4, LOW);
 }
