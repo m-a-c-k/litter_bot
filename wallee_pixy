@@ -4,11 +4,17 @@
 #define in2 7
 #define in3 4
 #define in4 5
+#define TRIGGER_PIN  12
+#define ECHO_PIN     11
+#define MAX_DISTANCE 400
+ 
 
+#include <NewPing.h>
 #include <Pixy2.h>
 
 // This is the main Pixy object 
 Pixy2 pixy;
+NewPing sonar(TRIGGER_PIN, ECHO_PIN, MAX_DISTANCE);
 
 int i, j, area;
 
@@ -18,17 +24,10 @@ void setup() {
   pinMode(in1, OUTPUT);
   pinMode(in2, OUTPUT);
  
-  // Set initial rotation direction
-  /*
-  digitalWrite(in1, LOW);
-  digitalWrite(in2, HIGH);
-  digitalWrite(in3, LOW);
-  digitalWrite(in4, HIGH);
-  */
   Serial.begin(115200);
   Serial.print("...Starting...\n");
   pixy.init();
-  pixy.setLamp(1, 0);
+  pixy.setLamp(0, 0);
   delay(500);
 
 }
@@ -38,8 +37,12 @@ void loop() {
   analogWrite(enA, pwmOutput); // Send PWM signal to L298N Enable pin
   analogWrite(enB, pwmOutput);
   pixy.ccc.getBlocks();
+  /*Serial.print("Ping: ");
+  Serial.print(sonar.ping_cm());
+  Serial.println("cm");
+*/
 
-  if (pixy.ccc.numBlocks)
+if (pixy.ccc.numBlocks)
   {
     pwmOutput = 255;
     Serial.print("Detected ");
@@ -57,19 +60,19 @@ void loop() {
       if(pixy.ccc.blocks[i].m_x<=100)
       {      
       lft();  
-      delay(100); 
+      delay(20); 
       }   
 
       if(pixy.ccc.blocks[i].m_x>=220)
       {      
       rght();      
-      delay(100); 
+      delay(20); 
       }
             
       if(pixy.ccc.blocks[i].m_x>100 && pixy.ccc.blocks[i].m_x<220)
       {      
       fwd();
-      delay(500);
+      delay(200);
       }
       
       
@@ -78,10 +81,10 @@ void loop() {
       bck();
       }
 
-      
-      delay (10);
+      stp(); 
+      delay (5);
 
-      stp();                       
+                            
     }
   }  
 
