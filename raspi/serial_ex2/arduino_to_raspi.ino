@@ -9,5 +9,5 @@ Serial.begin(9600);
 void loop() {
 // put your main code here, to run repeatedly:
 Serial.println(data);//data that is being Sent
-delay(200);
+delay(2000);
 }
