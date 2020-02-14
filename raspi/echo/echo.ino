@@ -1,32 +1,37 @@
-// Define Trig and Echo pin:
-#define trigPin 7
-#define echoPin 6
-// Define variables:
-long duration;
-int distance;
+const int pingPin = 7; // Trigger Pin of Ultrasonic Sensor
+const int echoPin = 6; // Echo Pin of Ultrasonic Sensor
+
 void setup() {
-  // Define inputs and outputs:
-  pinMode(trigPin, OUTPUT);
-  pinMode(echoPin, INPUT);
-  //Begin Serial communication at a baudrate of 9600:
-  Serial.begin(9600);
+   Serial.begin(9600); // Starting Serial Terminal
 }
+
 void loop() {
-  // Clear the trigPin by setting it LOW:
-  digitalWrite(trigPin, LOW);
-  delayMicroseconds(5);
-  // Trigger the sensor by setting the trigPin high for 10 microseconds:
-  digitalWrite(trigPin, HIGH);
-  delayMicroseconds(10);
-  digitalWrite(trigPin, LOW);
-  // Read the echoPin, pulseIn() returns the duration (length of the pulse) in microseconds:
-  duration = pulseIn(echoPin, HIGH);
-  // Calculate the distance:
-  distance= duration*0.034/2;
-  // Print the distance on the Serial Monitor (Ctrl+Shift+M):
-  Serial.print("Distance = ");
-  Serial.print(distance);
-  Serial.println(" cm");
-  
-  delay(50);
+   long duration, inches, cm;
+   pinMode(pingPin, OUTPUT);
+   digitalWrite(pingPin, LOW);
+   delayMicroseconds(2);
+   digitalWrite(pingPin, HIGH);
+   delayMicroseconds(10);
+   digitalWrite(pingPin, LOW);
+   pinMode(echoPin, INPUT);
+   duration = pulseIn(echoPin, HIGH);
+   inches = microsecondsToInches(duration);
+   cm = microsecondsToCentimeters(duration);
+   Serial.print(duration);
+   Serial.print(" ");
+   Serial.print(inches);
+   Serial.print("in, ");
+   Serial.print(cm);
+   Serial.print("cm");
+   Serial.println();
+   delay(100);
+}
+
+long microsecondsToInches(long microseconds) {
+   return microseconds / 74 / 2;
+}
+
+
+long microsecondsToCentimeters(long microseconds) {
+   return microseconds / 29 / 2;
 }
