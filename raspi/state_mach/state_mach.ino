@@ -15,8 +15,9 @@ void setup(){
  
 void loop(){
   state_machine_run(read_Cam());
- 
+  Serial.print(state);
   delay(10);
+  
 }
  
 void state_machine_run(uint8_t camera) 

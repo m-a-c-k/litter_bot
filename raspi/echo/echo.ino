@@ -1,13 +1,15 @@
 const int pingPin = 7; // Trigger Pin of Ultrasonic Sensor
 const int echoPin = 6; // Echo Pin of Ultrasonic Sensor
 bool      tooClose;
+long duration, inches, cm;
 
 void setup() {
    Serial.begin(9600); // Starting Serial Terminal
+   fwd();
 }
 
+
 void loop() {
-   long duration, inches, cm;
    pinMode(pingPin, OUTPUT);
    digitalWrite(pingPin, LOW);
    delayMicroseconds(2);
@@ -17,10 +19,10 @@ void loop() {
    pinMode(echoPin, INPUT);
    duration = pulseIn(echoPin, HIGH);
    cm = microsecondsToCentimeters(duration);
-   Serial.print(duration);
-   Serial.print(" ");
+   //Serial.print(duration);
+   Serial.print("\n");
    Serial.print(cm);
-   Serial.print("cm");
+   Serial.print("cm\n");
    Serial.println();
    delay(100);
 
@@ -28,8 +30,16 @@ void loop() {
     detected();
     tooClose = true;
   }
-  else tooClose =false;
-   
+  else {
+    tooClose =false;
+    fwd();
+  }
+  delay(10);
+  
+  
+  
+  
+  
 }
 
 
@@ -43,3 +53,26 @@ void detected(){
   Serial.print("too close\n");
   delay(500);
 }
+
+//------------------------------------------------------//
+void fwd(){
+  //
+  Serial.print("forward\n");
+}
+
+void rotate_lft(){
+  //
+}
+
+void rotate_right(){
+  //
+}
+
+void bck(){
+  //
+}
+
+void halt(){
+ //
+}
+
