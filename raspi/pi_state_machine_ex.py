@@ -9,26 +9,18 @@ class RobotStates:
   SWEEP = 6
   LOOK_FOR_BIN = 7
   
-  
+
 currentState = RobotStates.IDLE
 
-
-while True:
-    print("\n<read from camera and sensors>\n")
-    print ("Current State:       ",currentState)
+i=0
     
-    if (currentState == RobotStates.IDLE):
-		currentState = RobotStates.FOLLOW
-		time.sleep(3)
-		
-	elif (currentState == RobotStates.FOLLOW):
-		fwd()
-		time.sleep(3)
-        
-          
-
+    
 def search (): 
-	print("searching")
+	return (5,6)
+	
+def track():
+	return ("arrived")
+
 
 def fwd():
 	print("forward")
@@ -45,3 +37,45 @@ def rght():
 def halt():
 	print("stop moving")
 
+def dumpFunction():
+	print("dumping")
+	return ("Dumped")
+	
+
+ 
+while True:
+	print("loop: ", i)
+	i += 1
+  
+	if (currentState == RobotStates.IDLE):
+		print("STATE: ", currentState)
+		currentState = RobotStates.SEARCH
+	
+	if (currentState == RobotStates.SEARCH):			
+		print("...searching...")
+		if (search() == (5,6)):
+			print("coordinates: ",search())
+			currentState = RobotStates.FOLLOW
+			fwd()
+			
+	elif (currentState == RobotStates.FOLLOW):
+		print("STATE: ", currentState)
+		if (track() == "arrived"):
+			currentState = RobotStates.ARRIVED
+			halt()
+			
+	elif (currentState == RobotStates.ARRIVED):
+		print("STATE: ", currentState)
+		print("\nhere\n")
+		currentState = RobotStates.DUMP
+	
+	elif (currentState == RobotStates.DUMP):
+		print("STATE: ", currentState)
+		if (dumpFunction() == "Dumped"):
+			print("All dumped out")
+			currentState = RobotStates.IDLE		
+						
+			
+			
+		
+	time.sleep(2)
