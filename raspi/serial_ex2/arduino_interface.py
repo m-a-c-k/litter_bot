@@ -21,5 +21,5 @@ while True:
 	
 	read_ser=ser.readline()
 	print(read_ser)
-	if(read_ser=="Hello From Arduino!"):
+	if(read_ser):
 		blink(11)
