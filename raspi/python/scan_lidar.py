@@ -24,7 +24,7 @@ if (__name__) == "__main__" :
 		print ("Not Connected")
 	else:
 		print ("Connected")
-	while (connected):
+	while (connected >= -1):
 		s = str(input("Start Scanning?y/n : "))
 
 		if (s == 'y'):
