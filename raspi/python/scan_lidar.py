@@ -2,7 +2,7 @@ from lidar_lite import Lidar_Lite
 lidar = Lidar_Lite()
 
 connected = lidar.connect(1)
-
+tooClose = False
 
 
 
@@ -11,15 +11,19 @@ def scan_li(c):
 		distance = lidar.getDistance()
 		print ("Distance to target = ", distance)
 		if (int(distance) < 20):
-        		print ("Too Close!!! Back Off!!")
+			tooClose = True
+			print ("\nToo Close!!! Back Off!!\n")
+
+		if (int(distance) > 35):
+			tooClose = False
+			print("\nProceed\n")
 
 
 
 
 
 
-
-if (__name__) == "__main__" :
+if (__name__) == "__main__":
 	if connected < -1:
 		print ("Not Connected")
 	else:
