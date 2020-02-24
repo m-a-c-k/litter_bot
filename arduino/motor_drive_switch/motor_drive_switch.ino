@@ -27,16 +27,14 @@
 
 #define FAST_I2C
 
-enum rangeType_T
+enum DRIVE_FUNCTION
 {
-    //RANGE_NONE,
-    //RANGE_SINGLE,
-    //RANGE_CONTINUOUS,
-    //RANGE_TIMER
-    FORWARD
-    BACKWARD
-    LEFT_ROT
-    RIGHT_ROT
+    REST,
+    STOP,
+    FORWARD,
+    BACKWARD,
+    LEFT_ROT,
+    RIGHT_ROT,
 };
 
 void setup()
@@ -44,29 +42,14 @@ void setup()
     // Initialize Arduino serial port (for display of ASCII output to PC)
     Serial.begin(115200);
 
-    // Initialize Arduino I2C (for communication to LidarLite)
-    //Wire.begin();
-    //#ifdef FAST_I2C
-      //  #if ARDUINO >= 157
-       //     Wire.setClock(400000UL); // Set I2C frequency to 400kHz (for Arduino Due)
-       // #else
-            TWBR = ((F_CPU / 400000UL) - 16) / 2; // Set I2C frequency to 400kHz
-       // #endif
-    //#endif
-
-    // Configure the LidarLite internal parameters so as to lend itself to
-    // various modes of operation by altering 'configure' input integer to
-    // anything in the range of 0 to 5. See LIDARLite_v3HP.cpp for details.
-    //myLidarLite.configure(0);
 }
 
 
 void loop()
 {
     uint16_t distance;
-    uint8_t  newDistance = 0;
     uint8_t  c;
-    rangeType_T rangeMode = RANGE_NONE;
+    DRIVE_FUNCTION driveMode = REST;
 
     // Continuous loop
     while (1)
@@ -82,173 +65,76 @@ void loop()
             {
                 case 'S':
                 case 's':
-                    rangeMode = RANGE_SINGLE;
+                    driveMode = STOP;
                     break;
 
-                case 'C':
-                case 'c':
-                    rangeMode = RANGE_CONTINUOUS;
+                case 'R':
+                case 'r':
+                    driveMode = RIGHT_ROT;
                     break;
 
-                case 'T':
-                case 't':
-                    rangeMode = RANGE_TIMER;
+                case 'L':
+                case 'l':
+                    driveMode = LEFT_ROT;
                     break;
 
-                case '.':
-                    rangeMode = RANGE_NONE;
+                case 'b':
+                case 'B':
+                    driveMode = BACKWARD;
                     break;
 
-                case 'D':
-                case 'd':
-                    rangeMode = RANGE_NONE;
-                    dumpCorrelationRecord();
+                case 'F':
+                case 'f':
+                    driveMode = FORWARD;
                     break;
 
-                case 0x0D:
-                case 0x0A:
-                    break;
-
+                case 'Q':
+                case 'q':
+                    exit(3);
+                    
                 default:
                     Serial.println("=====================================");
                     Serial.println("== Type a single character command ==");
                     Serial.println("=====================================");
-                    Serial.println(" S - Single Measurement");
-                    Serial.println(" C - Continuous Measurement");
-                    Serial.println(" T - Timed Measurement");
-                    Serial.println(" . - Stop Measurement");
-                    Serial.println(" D - Dump Correlation Record");
+                    Serial.println(" S - Stop");
+                    Serial.println(" B - Backwards");
+                    Serial.println(" Q - Quit");
                     break;
             }
         }
 
-        switch (rangeMode)
+        switch (driveMode)
         {
-            case RANGE_NONE:
-                newDistance = 0;
+            case FORWARD:
+                Serial.print("fwd\n");
+                //fwd motor controller function
                 break;
 
-            case RANGE_SINGLE:
-                newDistance = distanceSingle(&distance);
+            case BACKWARD:
+                Serial.print("reverse\n");
+                //motor controller function
                 break;
 
-            case RANGE_CONTINUOUS:
-                newDistance = distanceContinuous(&distance);
+            case RIGHT_ROT:
+                Serial.print("right\n");
+                //motor controller function                
                 break;
 
-            case RANGE_TIMER:
-                delay(250); // 4 Hz
-                newDistance = distanceFast(&distance);
+            case LEFT_ROT:
+                Serial.print("left\n");
+                //motor controller function
                 break;
 
+            case STOP:
+                Serial.print("stop\n");
+                //motor controller function
+                break;
             default:
-                newDistance = 0;
+                Serial.print("default\n");
+                //motor controller function
                 break;
         }
 
-        // When there is new distance data, print it to the serial port
-        if (newDistance)
-        {
-            Serial.println(distance);
-        }
-
-        // Single measurements print once and then stop
-        if (rangeMode == RANGE_SINGLE)
-        {
-            rangeMode = RANGE_NONE;
-        }
+        delay(100);
     }
-}
-
-//---------------------------------------------------------------------
-// Read Single Distance Measurement
-//
-// This is the simplest form of taking a measurement. This is a
-// blocking function as it will not return until a range has been
-// taken and a new distance measurement can be read.
-//---------------------------------------------------------------------
-uint8_t distanceSingle(uint16_t * distance)
-{
-    // 1. Wait for busyFlag to indicate device is idle. This must be
-    //    done before triggering a range measurement.
-    myLidarLite.waitForBusy();
-
-    // 2. Trigger range measurement.
-    myLidarLite.takeRange();
-
-    // 3. Wait for busyFlag to indicate device is idle. This should be
-    //    done before reading the distance data that was triggered above.
-    myLidarLite.waitForBusy();
-
-    // 4. Read new distance data from device registers
-    *distance = myLidarLite.readDistance();
-
-    return 1;
-}
-
-//---------------------------------------------------------------------
-// Read Continuous Distance Measurements
-//
-// The most recent distance measurement can always be read from
-// device registers. Polling for the BUSY flag in the STATUS
-// register can alert the user that the distance measurement is new
-// and that the next measurement can be initiated. If the device is
-// BUSY this function does nothing and returns 0. If the device is
-// NOT BUSY this function triggers the next measurement, reads the
-// distance data from the previous measurement, and returns 1.
-//---------------------------------------------------------------------
-uint8_t distanceContinuous(uint16_t * distance)
-{
-    uint8_t newDistance = 0;
-
-    // Check on busyFlag to indicate if device is idle
-    // (meaning = it finished the previously triggered measurement)
-    if (myLidarLite.getBusyFlag() == 0)
-    {
-        // Trigger the next range measurement
-        myLidarLite.takeRange();
-
-        // Read new distance data from device registers
-        *distance = myLidarLite.readDistance();
-
-        // Report to calling function that we have new data
-        newDistance = 1;
-    }
-
-    return newDistance;
-}
-
-//---------------------------------------------------------------------
-// Read Distance Measurement, Quickly
-//
-// Read distance. The approach is to poll the status register until the device goes
-// idle after finishing a measurement, send a new measurement command, then read the
-// previous distance data while it is performing the new command.
-//---------------------------------------------------------------------
-uint8_t distanceFast(uint16_t * distance)
-{
-    // 1. Wait for busyFlag to indicate device is idle. This must be
-    //    done before triggering a range measurement.
-    myLidarLite.waitForBusy();
-
-    // 2. Trigger range measurement.
-    myLidarLite.takeRange();
-
-    // 3. Read previous distance data from device registers.
-    //    After starting a measurement we can immediately read previous
-    //    distance measurement while the current range acquisition is
-    //    ongoing. This distance data is valid until the next
-    //    measurement finishes. The I2C transaction finishes before new
-    //    distance measurement data is acquired.
-    *distance = myLidarLite.readDistance();
-
-    return 1;
-}
-
-//---------------------------------------------------------------------
-// Print the correlation record for analysis
-//---------------------------------------------------------------------
-void dumpCorrelationRecord()
-{
-    myLidarLite.correlationRecordToSerial(256);
 }
