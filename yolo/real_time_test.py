@@ -25,6 +25,7 @@ while True:
     #detecting objects
     blob = cv2.dnn.blobFromImage(frame,0.00392,(320,320),(0,0,0), True, crop = False)
 
+
     net.setInput(blob)
     outs = net.forward(outputlayers)
 
@@ -47,6 +48,8 @@ while True:
                 #rectangle coordinates
                 x = int(center_x - w / 2)
                 y = int(center_y - h / 2)
+
+                print (x,y)
 
                 boxes.append([x,y,w,h])
                 confidences.append(float(confidence))
