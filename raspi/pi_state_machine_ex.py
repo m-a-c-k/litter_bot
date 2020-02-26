@@ -1,4 +1,7 @@
 import time
+from lidar_lite import Lidar_Lite
+lidar = Lidar_Lite()
+
 
 class RobotStates:
   IDLE = 1
@@ -9,10 +12,25 @@ class RobotStates:
   SWEEP = 6
   LOOK_FOR_BIN = 7
   
-
+  
+connected = lidar.connect(1)
+tooClose = False
 currentState = RobotStates.IDLE
 
 i=0
+    
+    
+def scan_li(c):
+	for i in range(c):
+		distance = lidar.getDistance()
+		print ("Distance to target = ", distance)
+		if (int(distance) < 20):
+			tooClose = True
+			print ("\nToo Close!!! Back Off!!\n")
+
+		if (int(distance) > 35):
+			tooClose = False
+			print("\nProceed\n")
     
     
 def search (): 
@@ -55,6 +73,7 @@ while True:
 		print("...searching...")
 		if (search() == (5,6)):
 			print("coordinates: ",search())
+			scan_li(50)
 			currentState = RobotStates.FOLLOW
 			fwd()
 			
