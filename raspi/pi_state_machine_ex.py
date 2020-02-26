@@ -11,6 +11,7 @@ class RobotStates:
   DUMP = 5
   SWEEP = 6
   LOOK_FOR_BIN = 7
+  REV = 8
   
   
 connected = lidar.connect(1)
@@ -41,6 +42,7 @@ def track():
 
 
 def fwd():
+	scan_li(8)
 	print("forward")
 
 def bck():
@@ -64,7 +66,11 @@ def dumpFunction():
 while True:
 	print("loop: ", i)
 	i += 1
-  
+	
+	if (tooClose):
+		bck()
+		currentState = RobotStates.Rev
+		
 	if (currentState == RobotStates.IDLE):
 		print("STATE: ", currentState)
 		currentState = RobotStates.SEARCH
@@ -73,12 +79,11 @@ while True:
 		print("...searching...")
 		if (search() == (5,6)):
 			print("coordinates: ",search())
-			scan_li(50)
 			currentState = RobotStates.FOLLOW
-			fwd()
-			
+						
 	elif (currentState == RobotStates.FOLLOW):
 		print("STATE: ", currentState)
+		fwd()
 		if (track() == "arrived"):
 			currentState = RobotStates.ARRIVED
 			halt()
