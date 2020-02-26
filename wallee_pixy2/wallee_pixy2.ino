@@ -59,7 +59,7 @@ void loop() {
   }
 
   scan();
- // pixy.ccc.getBlocks();
+ pixy.ccc.getBlocks();
   
   if (pixy.ccc.numBlocks)
   //if (signature ==1)
