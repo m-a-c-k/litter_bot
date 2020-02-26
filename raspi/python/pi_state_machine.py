@@ -11,11 +11,12 @@ class RobotStates:
   DUMP = 5
   SWEEP = 6
   LOOK_FOR_BIN = 7
-  
+  REV = 8
+  STOP = 9
   
 connected = lidar.connect(1)
 tooClose = False
-currentState = RobotStates.IDLE
+currentState = RobotStates.STOP
 
 i=0
     
@@ -28,12 +29,12 @@ def scan_li(c):
 			tooClose = True
 			print ("\nToo Close!!! Back Off!!\n")
 
-		if (int(distance) > 35):
+		elif (int(distance) > 35):
 			tooClose = False
 			print("\nProceed\n")
-    
-    
-def search (): 
+
+
+def search ():
 	return (5,6)
 	
 def track():
@@ -41,6 +42,7 @@ def track():
 
 
 def fwd():
+	scan_li(10)
 	print("forward")
 
 def bck():
@@ -64,7 +66,9 @@ def dumpFunction():
 while True:
 	print("loop: ", i)
 	i += 1
-  
+	if (tooClose == True):
+		bck()
+		currentState = RobotStates.REV  
 	if (currentState == RobotStates.IDLE):
 		print("STATE: ", currentState)
 		currentState = RobotStates.SEARCH
@@ -73,12 +77,12 @@ while True:
 		print("...searching...")
 		if (search() == (5,6)):
 			print("coordinates: ",search())
-			scan_li(50)
 			currentState = RobotStates.FOLLOW
-			fwd()
+			
 			
 	elif (currentState == RobotStates.FOLLOW):
 		print("STATE: ", currentState)
+		fwd()
 		if (track() == "arrived"):
 			currentState = RobotStates.ARRIVED
 			halt()
@@ -93,8 +97,18 @@ while True:
 		if (dumpFunction() == "Dumped"):
 			print("All dumped out")
 			currentState = RobotStates.IDLE		
-						
-			
-			
-		
+	elif (currentState == RobotStates.REV):
+		print("STATE: ", currentState)
+		if (tooClose == False) :
+			currentState = RobotStates.FOLLOW
+		else:
+			currentState = RobotStates.REV
+
+	elif (currentState == RobotStates.STOP):
+		print(tooClose)
+		if (tooClose == False):
+			currentState = RobotStates.SEARCH
+		print("STATE: ", currentState)
+		halt()
+
 	time.sleep(2)
