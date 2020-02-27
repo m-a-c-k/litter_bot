@@ -22,8 +22,8 @@ const int IN3 = 8;
 const int IN4 = 7;
 const int ENB = 9;
 
-int rate = 200;
-int rate_back = 100;
+int rate = 125;
+int rate_back = 125;
 int i = 0;
 int signature = 0;
 int x = 0;
@@ -50,26 +50,27 @@ void setup()
   pinMode(ENA, OUTPUT);
   pinMode(ENB, OUTPUT);
 
-  while (i <= 3) 
+  /*while (i <= 3) 
   {
     Serial.print("Loop #: "); Serial.print(i, DEC); Serial.print(" ");
     sweep();
     i++;
-  }
+  }*/
+  sweep ();
   
 }
 
 void loop () 
 {
-  while(millis()<5000)
+  /*while(millis()<5000)
   {
     search();
     area = width * height;
     maxArea = area + 1000;
     minArea = area - 1000;
   }
- 
- // search ();
+ */
+ search ();
   
   if (pixy.ccc.numBlocks)
   {
@@ -89,19 +90,19 @@ void loop ()
       if(pixy.ccc.blocks[i].m_x<=100)
       {      
         left_turn();
-        delay(10); 
+        delay(30); 
       }   
 
       if(pixy.ccc.blocks[i].m_x>=220)
       {      
         right_turn();    
-        delay(10); 
+        delay(30); 
       }
             
       if(pixy.ccc.blocks[i].m_x>100 && pixy.ccc.blocks[i].m_x<220)
       {      
       motor1_fwd(); motor2_fwd();
-      delay(200);
+      delay(300);
       }
             
       
@@ -128,17 +129,36 @@ void sweep()
   delay(500);
   motor1_fwd();
   motor2_fwd();
-  delay (1000);
+  delay (500);
   motor1_bck();
   motor2_bck();
   delay (500);
-  left_turn();
-  delay (500);
+  right_turn();
+  delay (250);
+  motor1_fwd();
+  motor2_fwd();
+  delay (250);
+  right_turn();
+  delay (250);
+  motor1_fwd();
+  motor2_fwd();
+  delay (250);
+  right_turn();
+  delay (250);
+  motor1_fwd();
+  motor2_fwd();
+  delay (250);
+  right_turn();
+  delay (250);
+  motor1_fwd();
+  motor2_fwd();
+  delay (250);
 }
 
 void search()
 {
   Serial.print("Pixy Search for Trash Bin");
+  motor1_stop(); motor2_stop();
   uint16_t blocks;
   Serial.print("\nScanning\n");
   blocks = pixy.ccc.getBlocks();
