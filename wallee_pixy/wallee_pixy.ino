@@ -1,4 +1,3 @@
-#include <Pixy2UART.h>
 #include <PIDLoop.h>
 #include <ZumoBuzzer.h>
 #include <Pixy2Video.h>

@@ -1,3 +1,13 @@
+#include <PIDLoop.h>
+#include <ZumoBuzzer.h>
+#include <Pixy2Video.h>
+#include <Pixy2I2C.h>
+#include <Pixy2SPI_SS.h>
+#include <ZumoMotors.h>
+#include <Pixy2.h>
+#include <Pixy2CCC.h>
+#include <TPixy2.h>
+#include <Pixy2Line.h>
 
 #include <SoftwareSerial.h>
 #include <stdint.h>
@@ -12,6 +22,9 @@ const int ENB = 9;
 
 int rate = 200;
 int rate_back = 100;
+int i = 0;
+
+Pixy2 pixy;
 
 void setup()
 {
@@ -26,34 +39,66 @@ void setup()
 
 void loop () 
 {
+  while (i <= 3) 
+  {
+    Serial.print("Loop #: "); Serial.print(i, DEC); Serial.print(" ");
+    sweep();
+    i++;
+  }
+
+  search ();
+  
+if (pixy.ccc.numBlocks)
+  {
+    Serial.println("Found\n");
+  }
+  
+else 
+    {
+      Serial.println("Not Yet Found\n");  
+    }
+  
+}
+
+
+
+////////////////////////////////////
+void sweep()
+{
   motor1_stop();
   motor2_stop();
   delay(500);
   motor1_fwd();
   motor2_fwd();
-  delay (500);
+  delay (1000);
   motor1_bck();
   motor2_bck();
-  delay (1000);
+  delay (500);
   left_turn();
-
+  delay (500);
 }
 
-
-
+void search()
+{
+  Serial.print("Pixy Search for Trash Bin");
+  uint16_t blocks;
+  Serial.print("\nScanning\n");
+  blocks = pixy.ccc.getBlocks();
+  delay(10);
+}
 
 void motor1_stop()
 {
   digitalWrite(IN1, LOW);
   digitalWrite(IN2, LOW); 
-  Serial.print("stop"); 
+  Serial.print("stop\t"); 
 }
 
 void motor2_stop()
 {  
   digitalWrite(IN3, LOW);
   digitalWrite(IN4, LOW);  
-    Serial.print("stop2"); 
+    Serial.print("stop2\t"); 
 
 }
 
@@ -62,7 +107,7 @@ void motor1_fwd()
   digitalWrite(IN1, HIGH);
   digitalWrite(IN2, LOW);
   analogWrite(ENA, rate);
-    Serial.print("fwd\t"); 
+    Serial.print("fwd1\t"); 
   
 }
 
