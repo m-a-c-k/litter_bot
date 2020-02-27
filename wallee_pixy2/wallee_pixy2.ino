@@ -2,12 +2,12 @@
 
 #include <SoftwareSerial.h>
 
-#define enA 9
-#define enB 10
-#define in1 6
-#define in2 7
-#define in3 4
-#define in4 5
+#define enA 6
+#define enB 9
+#define in1 5
+#define in2 4
+#define in3 8
+#define in4 7
 
 #include <Pixy2.h>
 
@@ -26,7 +26,7 @@ int Xmin = 70;
 int Xmax = 200;
 int maxArea = 0;
 int minArea = 0;
-
+int pwmOutput = 255;
 
 void setup() {
   pinMode(enA, OUTPUT);
@@ -38,7 +38,7 @@ void setup() {
   pixy.init();
   pixy.setLamp(0, 0);
   delay(500);
-  int pwmOutput = 255; // value from 0 to 255
+   // value from 0 to 255
   analogWrite(enA, pwmOutput); // Send PWM signal to L298N Enable pin
   analogWrite(enB, pwmOutput);
 
@@ -46,7 +46,7 @@ void setup() {
 }
 void loop() {
   
-  int pwmOutput = 255; // value from 0 to 255
+  //int pwmOutput = 200; // value from 0 to 255
   analogWrite(enA, pwmOutput); // Send PWM signal to L298N Enable pin
   analogWrite(enB, pwmOutput);
 
@@ -129,8 +129,15 @@ void fwd()
   Serial.print("\nforward\n");
   digitalWrite(in1, HIGH);
   digitalWrite(in2, LOW);
+  analogWrite(enA, pwmOutput); // Send PWM signal to L298N Enable pin
+}
+
+void fwd2()
+{
+  Serial.print("\nforward 2\n");
   digitalWrite(in3, HIGH);
   digitalWrite(in4, LOW);
+  analogWrite(enB, pwmOutput);
 }
 
 void bck()
@@ -181,35 +188,35 @@ void search()
 void sweep_field()
 {
   
-  fwd();  delay(2000);
+  fwd();  fwd2(); delay(2000);
   stp();  delay (5);
   rght(); delay (240);
   stp();  delay (5);
-  fwd();  delay(400);
+  fwd();  fwd2(); delay(400);
   stp();  delay (5);
   rght(); delay (240);
   stp();  delay (5);
-  fwd();  delay(2000);
+  fwd();  fwd2(); delay(2000);
   stp();  delay (5);
   lft();  delay (240);
   stp();  delay (5);
-  fwd();  delay(400);
+  fwd();  fwd2(); delay(400);
   stp();  delay (5);
   lft();  delay (240);
   stp();  delay (5);
-  fwd();  delay(2000);
+  fwd();  fwd2(); delay(2000);
   stp();   delay (5);
   rght(); delay (240);
   stp();  delay (5);
-  fwd();  delay(400);
+  fwd();  fwd2(); delay(400);
   stp();  delay (5);
   rght(); delay (240);
   stp();  delay (5);
-  fwd();  delay(2000);
+  fwd();  fwd2(); delay(2000);
   stp();  delay (5);
   lft();  delay (240);
   stp();  delay (5);
-  fwd();  delay(400);
+  fwd(); fwd2();  delay(400);
   stp();  delay (5);
   lft();  delay (240);
   stp();  delay (5);
