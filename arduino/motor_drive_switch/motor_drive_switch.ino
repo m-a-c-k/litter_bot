@@ -178,7 +178,6 @@ void motor2_stop()
   digitalWrite(IN3, LOW);
   digitalWrite(IN4, LOW);  
   Serial.print("stop2\t"); 
-
 }
 
 void motor1_fwd()
@@ -186,16 +185,15 @@ void motor1_fwd()
   digitalWrite(IN1, HIGH);
   digitalWrite(IN2, LOW);
   analogWrite(ENA, rate);
-    Serial.print("fwd1\t"); 
-  
-}
+  Serial.print("fwd1\t"); 
+  }
 
 void motor2_fwd()
 {
   digitalWrite(IN3, HIGH);
   digitalWrite(IN4, LOW);
   analogWrite(ENB, rate);
-    Serial.print("fwd2\t"); 
+  Serial.print("fwd2\t"); 
 
 }
 
@@ -224,5 +222,5 @@ void left_turn ()
 void right_turn ()
 {
   motor1_bck(); motor2_fwd();
-  Serial.print("Richtzip\n");
+  Serial.print("Richtzig\n");
 }
