@@ -22,8 +22,8 @@ const int IN3 = 8;
 const int IN4 = 7;
 const int ENB = 9;
 
-int rate = 125;
-int rate_back = 125;
+int rate = 105;
+int rate_back = 105;
 int i = 0;
 int signature = 0;
 int x = 0;
@@ -130,29 +130,30 @@ void sweep()
   motor1_fwd();
   motor2_fwd();
   delay (500);
-  motor1_bck();
-  motor2_bck();
-  delay (500);
+  motor1_stop();
+  motor2_stop();
+  delay (50);
   right_turn();
-  delay (250);
+  delay (900);
   motor1_fwd();
   motor2_fwd();
   delay (250);
   right_turn();
-  delay (250);
+  delay (900);
   motor1_fwd();
   motor2_fwd();
   delay (250);
   right_turn();
-  delay (250);
+  delay (900);
   motor1_fwd();
   motor2_fwd();
   delay (250);
   right_turn();
-  delay (250);
+  delay (900);
   motor1_fwd();
   motor2_fwd();
   delay (250);
+  motor1_stop(); motor2_stop();
 }
 
 void search()
