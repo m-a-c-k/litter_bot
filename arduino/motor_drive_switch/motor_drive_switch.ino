@@ -131,7 +131,7 @@ void loop ()
     dump (); Dump_Bool = false;
     delay(3000);
     TooClose = false;
-    sweep();
+    //sweep();
     exit(0);
   }
 }
@@ -146,36 +146,36 @@ void sweep()
   delay(500);
   motor1_fwd();
   motor2_fwd();
-  delay (400);
+  delay (600);
   motor1_stop();
   motor2_stop();
   delay (50);
   right_turn();
-  delay (1200);
+  delay (1050);
   motor1_fwd();
   motor2_fwd();
-  delay (400);
+  delay (600);
   motor1_stop(); motor2_stop();
   delay (750);
   right_turn();
-  delay (1200);
+  delay (1050);
   motor1_fwd();
   motor2_fwd();
-  delay (400);
+  delay (600);
   motor1_stop(); motor2_stop(); 
   delay (750);
   right_turn();
-  delay (1200);
+  delay (1050);
   motor1_fwd();
   motor2_fwd();
-  delay (400);
+  delay (600);
   motor1_stop(); motor2_stop();
   delay (750);
   right_turn();
-  delay (1200);
+  delay (1050);
   motor1_fwd();
   motor2_fwd();
-  delay (400);
+  delay (600);
   motor1_stop(); motor2_stop();
 }
 
@@ -186,7 +186,8 @@ void search()
   uint16_t blocks;
   Serial.print("\nScanning\n");
   blocks = pixy.ccc.getBlocks();
-  delay(10);
+  right_turn(); delay (100); left_turn(); delay(100);
+  motor1_stop(); motor2_stop(); delay(10);
 }
 
 void motor1_stop()
