@@ -22,8 +22,8 @@ const int IN3 = 8;
 const int IN4 = 7;
 const int ENB = 9;
 
-int rate = 105;
-int rate_back = 105;
+int rate = 120;
+int rate_back = 120;
 int i = 0;
 int signature = 0;
 int x = 0;
@@ -36,6 +36,8 @@ int Xmin = 70;
 int Xmax = 200;
 int maxArea = 0;
 int minArea = 0;
+bool TooClose = false;
+bool Dump_Bool = false;
 
 
 void setup()
@@ -58,19 +60,18 @@ void setup()
   }*/
   sweep ();
   
+  
 }
 
 void loop () 
 {
-  /*while(millis()<5000)
+  while(TooClose == false)
   {
-    search();
-    area = width * height;
-    maxArea = area + 1000;
-    minArea = area - 1000;
-  }
- */
- search ();
+ 
+  search ();
+  area = (pixy.ccc.blocks[i].m_width * pixy.ccc.blocks[i].m_height);
+  maxArea = area + 1000;
+  minArea = area - 1000;
   
   if (pixy.ccc.numBlocks)
   {
@@ -79,13 +80,14 @@ void loop ()
     Serial.println(pixy.ccc.numBlocks);
     for (i=0; i<pixy.ccc.numBlocks; i++)
     {
+      area = (pixy.ccc.blocks[i].m_width * pixy.ccc.blocks[i].m_height);
       Serial.print("  block ");
       Serial.print(i);
       Serial.print(": ");
       pixy.ccc.blocks[i].print();
       Serial.print("  Area: \t");
       Serial.print(area); Serial.print("\nNew Area: \t"); Serial.print(newarea); Serial.print("\n"); 
-      area = (pixy.ccc.blocks[i].m_width * pixy.ccc.blocks[i].m_height);
+      
           
       if(pixy.ccc.blocks[i].m_x<=100)
       {      
@@ -106,17 +108,32 @@ void loop ()
       }
             
       
-      else if(newarea > maxArea)
+      if(area > 38000)
       {
        motor1_bck(); motor2_bck;
-       delay(50); 
+       delay(100); 
+       Serial.println("\n\tTOO CLOSE\n");
+       TooClose = true;
+       Dump_Bool = true;
       }
 
       motor1_stop(); motor2_stop(); 
       delay (5);                            
     }
   } 
-  
+ }
+  if ((TooClose) && (Dump_Bool))
+  {
+    Serial.println("Arrived at Destinastion");
+    delay(3000);
+    turn_around();
+    delay(3000);
+    dump (); Dump_Bool = false;
+    delay(3000);
+    TooClose = false;
+    //sweep();
+    exit(0);
+  }
 }
 
 
@@ -129,30 +146,36 @@ void sweep()
   delay(500);
   motor1_fwd();
   motor2_fwd();
-  delay (500);
+  delay (600);
   motor1_stop();
   motor2_stop();
   delay (50);
   right_turn();
-  delay (900);
+  delay (1050);
   motor1_fwd();
   motor2_fwd();
-  delay (250);
+  delay (600);
+  motor1_stop(); motor2_stop();
+  delay (750);
   right_turn();
-  delay (900);
+  delay (1050);
   motor1_fwd();
   motor2_fwd();
-  delay (250);
+  delay (600);
+  motor1_stop(); motor2_stop(); 
+  delay (750);
   right_turn();
-  delay (900);
+  delay (1050);
   motor1_fwd();
   motor2_fwd();
-  delay (250);
+  delay (600);
+  motor1_stop(); motor2_stop();
+  delay (750);
   right_turn();
-  delay (900);
+  delay (1050);
   motor1_fwd();
   motor2_fwd();
-  delay (250);
+  delay (600);
   motor1_stop(); motor2_stop();
 }
 
@@ -163,14 +186,15 @@ void search()
   uint16_t blocks;
   Serial.print("\nScanning\n");
   blocks = pixy.ccc.getBlocks();
-  delay(10);
+  right_turn(); delay (100); left_turn(); delay(100);
+  motor1_stop(); motor2_stop(); delay(10);
 }
 
 void motor1_stop()
 {
   digitalWrite(IN1, LOW);
   digitalWrite(IN2, LOW); 
-  Serial.print("stop\t"); 
+  Serial.print("stop1\t"); 
 }
 
 void motor2_stop()
@@ -223,4 +247,20 @@ void right_turn ()
 {
   motor1_bck(); motor2_fwd();
   Serial.print("Richtzig\n");
+<<<<<<< HEAD
+=======
+}
+
+void dump()
+{
+  Serial.println("Dump function call"); 
+}
+
+void turn_around()
+{
+  Serial.println("Spin function call");
+  right_turn();
+  delay(2500);
+  motor1_stop(); motor2_stop();
+>>>>>>> a9b6a9ba95f459402eb1c9a9193a329a1bc7eb34
 }
