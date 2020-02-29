@@ -141,14 +141,12 @@ void loop ()
 ////////////////////////////////////
 void sweep()
 {
-  motor1_stop();
-  motor2_stop();
+  motor1_stop(); motor2_stop();
   delay(500);
   motor1_fwd();
   motor2_fwd();
   delay (600);
-  motor1_stop();
-  motor2_stop();
+  motor1_stop(); motor2_stop();
   delay (50);
   right_turn();
   delay (1050);
@@ -247,8 +245,7 @@ void right_turn ()
 {
   motor1_bck(); motor2_fwd();
   Serial.print("Richtzig\n");
-<<<<<<< HEAD
-=======
+
 }
 
 void dump()
@@ -260,7 +257,6 @@ void turn_around()
 {
   Serial.println("Spin function call");
   right_turn();
-  delay(2500);
+  delay(2000);
   motor1_stop(); motor2_stop();
->>>>>>> a9b6a9ba95f459402eb1c9a9193a329a1bc7eb34
 }
