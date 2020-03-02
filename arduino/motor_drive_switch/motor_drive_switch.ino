@@ -54,6 +54,7 @@ void setup()
   
   // perform initial sweep
   sweep ();
+  sweep ();
   
   
 }
@@ -158,28 +159,28 @@ void sweep()
   motor1_stop(); motor2_stop();
   delay (50);
   right_turn();
-  delay (1050);
+  delay (1150);
   motor1_fwd();
   motor2_fwd();
   delay (600);
   motor1_stop(); motor2_stop();
   delay (750);
   right_turn();
-  delay (1050);
+  delay (1150);
   motor1_fwd();
   motor2_fwd();
   delay (600);
   motor1_stop(); motor2_stop(); 
   delay (750);
   right_turn();
-  delay (1050);
+  delay (1150);
   motor1_fwd();
   motor2_fwd();
   delay (600);
   motor1_stop(); motor2_stop();
   delay (750);
   right_turn();
-  delay (1050);
+  delay (1150);
   motor1_fwd();
   motor2_fwd();
   delay (600);
