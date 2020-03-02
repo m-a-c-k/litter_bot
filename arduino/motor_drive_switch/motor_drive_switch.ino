@@ -24,7 +24,7 @@ const int ENB = 9;
 
 int rate = 120;
 int rate_back = 120;
-int i = 0;
+int i = 0; int j = 0;
 int signature = 0;
 int x = 0;
 int y = 0;
@@ -44,20 +44,15 @@ void setup()
 {
   pixy.init();
   Serial.begin(115200);
-  Serial.print("...Starting...\n");
+  Serial.print("\t\t...Starting...\n");
   pinMode(IN1, OUTPUT);
   pinMode(IN2, OUTPUT);
   pinMode(IN3, OUTPUT);
   pinMode(IN4, OUTPUT);
   pinMode(ENA, OUTPUT);
   pinMode(ENB, OUTPUT);
-
-  /*while (i <= 3) 
-  {
-    Serial.print("Loop #: "); Serial.print(i, DEC); Serial.print(" ");
-    sweep();
-    i++;
-  }*/
+  
+  // perform initial sweep
   sweep ();
   
   
@@ -108,7 +103,7 @@ void loop ()
       }
             
       
-      if(area > 38000)
+      if(area > 30000)
       {
        motor1_bck(); motor2_bck;
        delay(100); 
@@ -120,7 +115,21 @@ void loop ()
       motor1_stop(); motor2_stop(); 
       delay (5);                            
     }
-  } 
+  }
+  else 
+  {
+      Serial.print("\t...panning...searching...panning... loop : ");
+      Serial.print(j); Serial.println(" ");
+      left_turn(); delay(250); 
+      motor1_stop(); motor2_stop(); delay(250);
+      motor1_fwd();
+      motor2_fwd();
+      delay (200);
+      motor1_stop(); motor2_stop(); 
+      delay (1000);     
+  }
+    
+  
  }
   if ((TooClose) && (Dump_Bool))
   {
@@ -179,13 +188,11 @@ void sweep()
 
 void search()
 {
-  Serial.print("Pixy Search for Trash Bin");
+  Serial.print("\tPixy Search for Trash Bin\t");
   motor1_stop(); motor2_stop();
   uint16_t blocks;
   Serial.print("\nScanning\n");
   blocks = pixy.ccc.getBlocks();
-  right_turn(); delay (100); left_turn(); delay(100);
-  motor1_stop(); motor2_stop(); delay(10);
 }
 
 void motor1_stop()
