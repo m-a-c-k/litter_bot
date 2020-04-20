@@ -1,9 +1,7 @@
 #include <PIDLoop.h>
-#include <ZumoBuzzer.h>
 #include <Pixy2Video.h>
 #include <Pixy2I2C.h>
 #include <Pixy2SPI_SS.h>
-#include <ZumoMotors.h>
 #include <Pixy2.h>
 #include <Pixy2CCC.h>
 #include <TPixy2.h>
@@ -14,14 +12,15 @@
 
 Pixy2 pixy;
 
+// drive motor 1 pins
 const int IN1 = 5;
 const int IN2 = 4;
 const int ENA = 6;
-
+//drive motor 2 pins
 const int IN3 = 8;
 const int IN4 = 7;
 const int ENB = 9;
-
+//rate of pwm speed
 int rate = 120;
 int rate_back = 120;
 int i = 0; int j = 0;
@@ -52,39 +51,43 @@ void setup()
   pinMode(ENA, OUTPUT);
   pinMode(ENB, OUTPUT);
   
-  // perform initial sweep
+  // perform initial 2 sweeps
   sweep ();
-  sweep ();
-  
-  
+  sweep ();  
 }
 
 void loop () 
 {
-  while(TooClose == false)
+  while(TooClose == false) 
   {
- 
+  // do this loop until the "too close" flag is raised
   search ();
   area = (pixy.ccc.blocks[i].m_width * pixy.ccc.blocks[i].m_height);
+  // area calculated using the block width and height as provided by PixyCam in pixels 
   maxArea = area + 1000;
   minArea = area - 1000;
   
   if (pixy.ccc.numBlocks)
   {
+    // if there are blocks detected withing the set color and size parameters
+    // then run this loop
     newarea = width * height;
     Serial.print("Detected ");
     Serial.println(pixy.ccc.numBlocks);
     for (i=0; i<pixy.ccc.numBlocks; i++)
     {
+      // run this loop for every block detected on screen, of the correct color signiture
       area = (pixy.ccc.blocks[i].m_width * pixy.ccc.blocks[i].m_height);
+      // re-calculate area as objects may have moved since last measurement
       Serial.print("  block ");
       Serial.print(i);
       Serial.print(": ");
       pixy.ccc.blocks[i].print();
       Serial.print("  Area: \t");
       Serial.print(area); Serial.print("\nNew Area: \t"); Serial.print(newarea); Serial.print("\n"); 
-      
-          
+      // below is the logic block used to keep an already determined block within
+      // the middle of the view of the PixyCam. 
+      // The 
       if(pixy.ccc.blocks[i].m_x<=100)
       {      
         left_turn();
@@ -96,14 +99,18 @@ void loop ()
         right_turn();    
         delay(30); 
       }
-            
+      // the below block indicates the target is between the left and right turn parameters      
       if(pixy.ccc.blocks[i].m_x>100 && pixy.ccc.blocks[i].m_x<220)
       {      
       motor1_fwd(); motor2_fwd();
       delay(300);
       }
             
-      
+      // Below is the loop which checks to see that the last measured area is not bigger than expected
+      // if the area is over the set value, determined experimentally
+      // then the "too close" and "dump" flags are flipped to true, and the robot stops
+      // so that on the next pass of the loop, the bot knows it has reached a wall, after having been
+      // aiming itself to the trash bin
       if(area > 30000)
       {
        motor1_bck(); motor2_bck;
@@ -112,13 +119,16 @@ void loop ()
        TooClose = true;
        Dump_Bool = true;
       }
-
+      // it is also possible for the too close flag to be raised due to input from the LIDAR sensors
+      // but the dump function would not be executed bc that flag would not have been rasied.
       motor1_stop(); motor2_stop(); 
       delay (5);                            
     }
   }
   else 
   {
+    // this else part of the loop is reached if no Bins are visible
+    // (idenitfied by color) in the current field of view. 
       Serial.print("\t...panning...searching...panning... loop : ");
       Serial.print(j); Serial.println(" ");
       left_turn(); delay(250); 
@@ -134,6 +144,9 @@ void loop ()
  }
   if ((TooClose) && (Dump_Bool))
   {
+    // this loop could be called the dump loop
+    // it is entered into after the robot has been navigating to the bins
+    // and the wall is reached, determiend visually.
     Serial.println("Arrived at Destinastion");
     delay(3000);
     turn_around();
@@ -141,7 +154,10 @@ void loop ()
     dump (); Dump_Bool = false;
     delay(3000);
     TooClose = false;
-    //sweep();
+    // after robot is spun to face the field again, and dumping is complete,
+    // the two flags are lowered so that the sweep function can continue with the 
+    // nearest trash strategy
+    sweep();
     exit(0);
   }
 }
@@ -151,6 +167,8 @@ void loop ()
 ////////////////////////////////////
 void sweep()
 {
+  // area sweep function
+  // called when in known vicinity of trash or at the beginnign of program
   motor1_stop(); motor2_stop();
   delay(500);
   motor1_fwd();
@@ -194,6 +212,8 @@ void search()
   uint16_t blocks;
   Serial.print("\nScanning\n");
   blocks = pixy.ccc.getBlocks();
+  // ^ is the actual execution of the pixy.get color coded blocks
+  // only runs when searching to lessen computing rescources occupied 
 }
 
 void motor1_stop()
@@ -258,7 +278,10 @@ void right_turn ()
 
 void dump()
 {
-  Serial.println("Dump function call"); 
+  Serial.println("Dump function call");
+  // currently time dependant dump function
+  // runs on second arduino after pre determiend time frame
+  // next step is to change to digital I/O signal
 }
 
 void turn_around()
