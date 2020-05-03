@@ -39,6 +39,12 @@ The purpose of this project is to design a robot to 2020 IEEE R5 robotics compet
 &nbsp;  
 &nbsp;  
 &nbsp;  
+ 
+![](https://github.com/m-a-c-k/litter_bot/blob/master/images/poster.png)
+&nbsp;  
+&nbsp;  
+&nbsp;  
+
 
 ###### MIT License
 ###### Copyright (c) [2020] [Mack Starnes, Uriel Lua, Lucia Sorto, Michael Telleze]
