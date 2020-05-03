@@ -6,47 +6,32 @@ Litter bot
   * Has opencv2 and lib-usb installed 
   * Demos work through raspi. need to interface with motor controller/arduino
 
-![](https://github.com/m-a-c-k/litter_bot/blob/master/images/HighLevel.png) \
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\  
+![](https://github.com/m-a-c-k/litter_bot/blob/master/images/HighLevel.png)
 
+&nbsp;  
+&nbsp;  
+&nbsp;  
+&nbsp;  
+&nbsp;  
+&nbsp;  
+&nbsp;  
+&nbsp;  
+&nbsp;  
+&nbsp;  
+&nbsp;  
+&nbsp;  
+&nbsp;  
 
 ###### MIT License
-###### Copyright (c) [2020] [Mack Starnes, Uriel Lua, Lucia Sorto, Michael Telleze]  
-
+###### Copyright (c) [2020] [Mack Starnes, Uriel Lua, Lucia Sorto, Michael Telleze]
+&nbsp;  
 ###### Permission is hereby granted, free of charge, to any person obtaining a copy of 
 ###### this software and associated documentation files (the "Software"), to deal in 
 ###### the Software without restriction, including without limitation the rights to 
 ###### use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 ###### copies of the Software, and to permit persons to whom the Software is
 ###### furnished to do so, subject to the following conditions:  
-
+&nbsp;  
 ###### The above copyright notice and this permission notice shall be
 ###### included in all copies or substantial portions of the Software.  
 ###### THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, 
