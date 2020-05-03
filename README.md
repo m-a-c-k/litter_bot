@@ -1,10 +1,16 @@
-# get_that_litter
-Litter bot
+# WALL-E
+The purpose of this project is to design a robot to 2020 IEEE R5 robotics competition that can collect and sort trash and dispose of trash. One of the motivations of the competition rules is to drive the development and innovation of technologies that can autonomously collect commonly littered items and transport them to a proper receptacle. Using computer vision, image processing, and motor control algorithms, a system could be implemented to reduce litter in natural areas with a relatively low amount of human work hours. 
+&nbsp;  
+&nbsp;
 
-## Raspi
-* Status
-  * Has opencv2 and lib-usb installed 
-  * Demos work through raspi. need to interface with motor controller/arduino
+# Hardware Used
+
+  
+- Raspi
+   * Requirements
+     * opencv2 and lib-usb installed
+   * Status
+     * Demos work through raspi. need to interface with motor controller/arduino
 
 ![](https://github.com/m-a-c-k/litter_bot/blob/master/images/HighLevel.png)
 
