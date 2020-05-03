@@ -10,15 +10,36 @@ The purpose of this project is to design a robot to 2020 IEEE R5 robotics compet
 # Hardware Used
 
   
-- Raspi
+- Raspberry Pi 4
    * Requirements
      * opencv2 and lib-usb installed
    * Status
-     * Demos work through raspi. need to interface with motor controller/arduino
+     * Demos work through raspi. need to interface with motor controller/arduino  
+
+- Arduino Uno (x2)
+   * Requirements
+     * opencv2 and lib-usb installed
+   * Status
+     * Demos work through raspi. need to interface with motor controller/arduino  
+
+- Cameras
+   * PixyCam2
+      * Requirements
+        * opencv2 and lib-usb installed
+      * Status
+        * Complete and integrated into system
+     * Pi Cam  
+        * Requirements
+          * Python 3.2+
+          * Raspberry Pi 3 or newer
+        * Status
+          * In progress
+          * 
+
 
 ![](https://github.com/m-a-c-k/litter_bot/blob/master/images/HighLevel.png)
 
-<sub>
+
 &nbsp;  
 &nbsp;  
 &nbsp;  
@@ -41,11 +62,17 @@ The purpose of this project is to design a robot to 2020 IEEE R5 robotics compet
 &nbsp;  
  
 ![](https://github.com/m-a-c-k/litter_bot/blob/master/images/poster.png)
-&nbsp;  
-&nbsp;  
-&nbsp;  
 
-
+&nbsp;  
+&nbsp;  
+&nbsp;  
+&nbsp;  
+&nbsp;  
+&nbsp; 
+&nbsp;  
+&nbsp;  
+&nbsp;  
+<sub>
 ###### MIT License
 ###### Copyright (c) [2020] [Mack Starnes, Uriel Lua, Lucia Sorto, Michael Telleze]
 &nbsp;  
