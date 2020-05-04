@@ -37,8 +37,10 @@ The purpose of this project is to design a robot to 2020 IEEE R5 robotics compet
           * In progress
           * 
 
+&nbsp;  
+&nbsp;  
 
-![](https://github.com/m-a-c-k/litter_bot/blob/master/images/HighLevel.png)
+![](https://github.com/m-a-c-k/litter_bot/blob/master/Documents/HighLevel.png)
 
 
 &nbsp;  
@@ -62,7 +64,7 @@ The purpose of this project is to design a robot to 2020 IEEE R5 robotics compet
 &nbsp;  
 &nbsp;  
  
-![](https://github.com/m-a-c-k/litter_bot/blob/master/images/poster.png)
+![](https://github.com/m-a-c-k/litter_bot/blob/master/Documents/poster.png)
 
 &nbsp;  
 &nbsp;  
