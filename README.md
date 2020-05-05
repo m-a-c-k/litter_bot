@@ -7,14 +7,22 @@ The purpose of this project is to design a robot to 2020 IEEE R5 robotics compet
 &nbsp;  
 
 <img src="images/walle_pic.png" alt="litter_bot">
-<sub>
-Competition Robot - 23"x22.5"x20" - 18lbs
-</sub>
+<sub>Competition Robot - 23"x22.5"x20" - 18lbs</sub>
 &nbsp; 
 &nbsp; 
 
 # Hardware 
-  
+&nbsp; 
+&nbsp; 
+## Arduino (x2)
+   * Requirements
+      * Uno or Mega Boards
+      * Arduino IDE for upload
+   * Status
+      * Fully integrated
+      * Controls motor functions and trash intake/dumping  
+      
+
 ## Raspberry Pi 4
    * Requirements
      * python 3.2+
@@ -23,14 +31,6 @@ Competition Robot - 23"x22.5"x20" - 18lbs
    * Status
      * Demos work internally on raspi.
      * Need to interface with motor controller/arduino  
-      
-## Arduino (x2)
-   * Requirements
-      * Uno or Mega Boards
-      * Arduino IDE for upload
-   * Status
-      * Fully integrated
-      * Controls motor functions and trash intake/dumping  
       
 
 ## Cameras
