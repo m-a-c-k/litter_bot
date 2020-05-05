@@ -7,7 +7,9 @@ The purpose of this project is to design a robot to 2020 IEEE R5 robotics compet
 &nbsp;  
 
 <img src="images/walle_pic.png" alt="litter_bot">
-<sub>Competition Robot - 23"x22.5"x20" - 18lbs</sub>
+<sub>
+Competition Robot - 23"x22.5"x20" - 18lbs
+</sub>
 &nbsp; 
 &nbsp; 
 
