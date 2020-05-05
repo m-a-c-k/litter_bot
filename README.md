@@ -10,8 +10,8 @@ The purpose of this project is to design a robot to 2020 IEEE R5 robotics compet
 
 &nbsp; 
 &nbsp; 
-# Hardware Used
 
+# Hardware 
   
 ## Raspberry Pi 4
    * Requirements
