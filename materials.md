@@ -19,10 +19,10 @@ https://pixycam.com/buy/
 Raspberry Pi Camera 
 https://www.amazon.com/Raspberry-Pi-Camera-Module-Megapixel/dp/B01ER2SKFS
 
-Microprocessors 
-Arduinos
-https://www.amazon.com/ELEGOO-ATmega2560-ATMEGA16U2-Projects-Compliant/dp/B01H4ZLZLQ/ref=sr_1_2_sspa?dchild=1&keywords=elegoo+mega&qid=1588636702&s=electronics&sr=1-2-spons&psc=1&spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUExT0FaVzdJNlBDOVdBJmVuY3J5cHRlZElkPUEwNzU2NTg5MTBBN0RNRDRCSDBDRCZlbmNyeXB0ZWRBZElkPUEwODcyOTA3QjVaWFBRQloyRTRVJndpZGdldE5hbWU9c3BfYXRmJmFjdGlvbj1jbGlja1JlZGlyZWN0JmRvTm90TG9nQ2xpY2s9dHJ1ZQ==
-Raspberry Pi 
+[Microprocessors 
+Arduinos](https://www.amazon.com/ELEGOO-ATmega2560-ATMEGA16U2-Projects-Compliant/dp/B01H4ZLZLQ/ref=sr_1_2_sspa?dchild=1&keywords=elegoo+mega&qid=1588636702&s=electronics&sr=1-2-spons&psc=1&spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUExT0FaVzdJNlBDOVdBJmVuY3J5cHRlZElkPUEwNzU2NTg5MTBBN0RNRDRCSDBDRCZlbmNyeXB0ZWRBZElkPUEwODcyOTA3QjVaWFBRQloyRTRVJndpZGdldE5hbWU9c3BfYXRmJmFjdGlvbj1jbGlja1JlZGlyZWN0JmRvTm90TG9nQ2xpY2s9dHJ1ZQ==
+Raspberry Pi) 
+
 https://www.amazon.com/Raspberry-Model-2019-Quad-Bluetooth/dp/B07TD42S27/ref=sr_1_3?crid=1ZI6DB5BSY94O&dchild=1&keywords=raspberry+pi+4&qid=1588636766&s=electronics&sprefix=raspberry+%2Celectronics%2C174&sr=1-3
 
 Motors
