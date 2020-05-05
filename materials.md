@@ -7,14 +7,17 @@
 
 ## Batteries
 [12V](https://www.amazon.com/gp/product/B07MQXBYZ5/ref=ppx_yo_dt_b_asin_title_o03_s00?ie=UTF8&psc=1)
+
 [5V](https://www.amazon.com/gp/product/B07JYYRT7T/ref=ppx_yo_dt_b_asin_title_o03_s00?ie=UTF8&psc=1)
 
 ## Cameras 
 [Pixy2](https://pixycam.com/buy/)
+
 [Raspberry Pi Camera](https://www.amazon.com/Raspberry-Pi-Camera-Module-Megapixel/dp/B01ER2SKFS)
 
 ## Microprocessors
 [Arduino Mega](https://store.arduino.cc/usa/mega-2560-r3)
+
 [Arduino Uno](https://store.arduino.cc/usa/arduino-uno-rev3)
 
 [Raspberry Pi](https://www.amazon.com/Raspberry-Model-2019-Quad-Bluetooth/dp/B07TD42S27/ref=sr_1_3?crid=1ZI6DB5BSY94O&dchild=1&keywords=raspberry+pi+4&qid=1588636766&s=electronics&sprefix=raspberry+%2Celectronics%2C174&sr=1-3)
