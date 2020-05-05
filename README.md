@@ -13,34 +13,51 @@ The purpose of this project is to design a robot to 2020 IEEE R5 robotics compet
 # Hardware Used
 
   
-- Raspberry Pi 4
+## Raspberry Pi 4
    * Requirements
+     * python 3.2+
      * opencv2 and lib-usb installed
+        * `pip install opencv2` or `pip3 install opencv2`  
    * Status
-     * Demos work through raspi. need to interface with motor controller/arduino  
-
-- Arduino Uno (x2)
+     * Demos work internally on raspi.
+     * Need to interface with motor controller/arduino  
+      
+## Arduino Uno (x2)
    * Requirements
-     * opencv2 and lib-usb installed
+      * Mega Boards also useable
+      * Arduino IDE for upload
    * Status
-     * Demos work through raspi. need to interface with motor controller/arduino  
+      * Fully integrated
+      * Controls motor functions and trash intake/dumping  
+      
 
-- Cameras
+## Cameras
    * PixyCam2
       * Requirements
-        * opencv2 and lib-usb installed
+        * pixymon for programming color-codes
       * Status
-        * Complete and integrated into system
-     * Pi Cam  
-        * Requirements
-          * Python 3.2+
-          * Raspberry Pi 3 or newer
-        * Status
-          * In progress
-          * 
-
+        * Fully integrated into system
+        * Directs navigation to programmed objects
+   * Pi Cam  
+      * Requirements
+        * Python 3.2+
+        * Raspberry Pi 3 or better
+      * Status
+        * Object detection functional
+           * Classifies objects and produces their coordinates
+        * Needs to be intehrated into motor-driver functionality  
+        
+        
+## Power Supply
+   * 12V LiPo
+   * 5V portable cell-phone battery pack  
+   
 &nbsp;  
 &nbsp;  
+&nbsp;  
+&nbsp;
+&nbsp;  
+&nbsp;
 
 <img src="Documents/HighLevel.png" alt="Block Diagram">
 
