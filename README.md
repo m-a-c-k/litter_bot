@@ -92,28 +92,13 @@ The purpose of this project is to design a robot to 2020 IEEE R5 robotics compet
 &nbsp;  
 &nbsp;  
 &nbsp;  
-&nbsp;  
-&nbsp;  
-&nbsp;  
-&nbsp;  
-&nbsp;  
-&nbsp;  
-&nbsp;  
-&nbsp;  
-&nbsp;  
-&nbsp;  
-&nbsp;  
-&nbsp;  
-&nbsp;  
+
  
 <img src="Documents/poster.png" alt="Presentation Poster">
 
 &nbsp;  
 &nbsp;  
 &nbsp;  
-&nbsp;  
-&nbsp;  
-&nbsp; 
 &nbsp;  
 &nbsp;  
 &nbsp;  
