@@ -51,7 +51,29 @@ The purpose of this project is to design a robot to 2020 IEEE R5 robotics compet
 ## Power Supply
    * 12V LiPo
    * 5V portable cell-phone battery pack  
-   
+
+## Motors
+  * Drive 
+    * (2x) 
+    * 12V DC
+    * 0.5A unloaded, 20.7A stall
+    * 317 rpm
+  * Lift
+    * Stepper Motor
+    * Holding Torque: 18Kg.cm
+  * Intake
+     * 0.1A unloaded
+     * 6000 rpm unloaded 
+
+## Sensors
+  * LiDAR
+    * Resolution:	1 mm
+    * Maximum range:	400 cm2
+    * Minimum range:	4 cm3
+    * Interface:	I²C
+    * Operating voltage:	2.6-5.5 V
+    * Supply current:	0.015A
+
 &nbsp;  
 &nbsp;  
 &nbsp;  
