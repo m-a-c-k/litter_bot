@@ -22,9 +22,9 @@ The purpose of this project is to design a robot to 2020 IEEE R5 robotics compet
      * Demos work internally on raspi.
      * Need to interface with motor controller/arduino  
       
-## Arduino Uno (x2)
+## Arduino (x2)
    * Requirements
-      * Mega Boards also useable
+      * Uno or Mega Boards
       * Arduino IDE for upload
    * Status
       * Fully integrated
